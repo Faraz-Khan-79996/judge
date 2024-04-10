@@ -120,7 +120,7 @@ app.post('/api/submit' , async(req , res)=>{
         const finalOutput = fs.readFileSync('./testcases/output.txt', { encoding: 'utf8', flag: 'r' });
         CorrectOutput = finalOutput.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
 
-        if(language == "cpp"){
+        if(language == "cpp" || language == "c"){
             const jobId = await compileCpp(filePath)
             output = await executeCpp(jobId , input)
         }
