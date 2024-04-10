@@ -109,7 +109,7 @@ const CodeEditor = ({ setKey, setResultInfo }) => {
                                 <label htmlFor="language" className="form-label">Language:</label>
                                 <select id="language" value={language} onChange={(e) => setLanguage(prev => e.target.value)} className="form-select">
                                     <option value="cpp">C++</option>
-                                    <option value="c">C</option>
+                                    {/* <option value="c">C</option> */}
                                     {/* <option value="python">Python</option> */}
                                     {/* <option value="java">Java</option> */}
                                     {/* Add more language options as needed */}
