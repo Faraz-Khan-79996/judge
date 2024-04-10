@@ -1,38 +1,27 @@
 const express = require('express');
 const path = require('path')
 const fs = require('fs')
-const { spawn , exec} = require('child_process');
+const { spawn, exec } = require('child_process');
 const cors = require('cors');
-const { error } = require('console');
 const app = express();
-const port = 3000;
+const { v4: uuid } = require("uuid");
+const port = process.env.PORT || 3000;
+
+const {generateFile , extension , executeCpp , compileCpp} = require('./utils/methods');
 
 app.use(cors())
-app.set("view engine" , "ejs")
+app.set("view engine", "ejs")
 
 app.use(express.json())
-app.use(express.static(path.join(__dirname ,'dist')))
+app.use(express.static(path.join(__dirname, 'dist')))
 
 
-// Define a route for the homepage
-// app.get('/', (req, res) => {
-//     res.render('index')
-// });
-
-// Start the server
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-});
-
-
-
-
-app.post("/compile" , (req , res)=>{
+app.post("/compile", (req, res) => {
     console.log("req received");
     const fileName = 'example.cpp';
     const filePath = path.join(__dirname, fileName);
 
-    const {code} = req.body;
+    const { code } = req.body;
     // Write code to file
     // console.log(code);
     // res.json(code)
@@ -47,50 +36,113 @@ app.post("/compile" , (req , res)=>{
     // console.log(input);
     // console.log(CorrectOutput);
 
-const compileProcess = spawn('g++', ['example.cpp', '-o', 'temp']);
+    const compileProcess = spawn('g++', ['example.cpp', '-o', 'temp']);
 
-compileProcess.on('exit', (code) => {
-    if (code === 0) {
+    compileProcess.on('exit', (code) => {
+        if (code === 0) {
 
-        try {
-            // Compilation successful, run the program
-            const runProcess = spawn('./temp');
+            try {
+                // Compilation successful, run the program
+                const runProcess = spawn('./temp');
 
-            // Provide input to the program
-            runProcess.stdin.write(input);
-            runProcess.stdin.end();
+                // Provide input to the program
+                runProcess.stdin.write(input);
+                runProcess.stdin.end();
 
-            // Get the output of the program
-            let output = '';
-            runProcess.stdout.on('data', (data) => {
-                output += data.toString();
-            });
+                // Get the output of the program
+                let output = '';
+                runProcess.stdout.on('data', (data) => {
+                    output += data.toString();
+                });
 
-            runProcess.on('close', () => {
-                // console.log('Output:', output);
-                console.log(output.trim());
-                console.log(CorrectOutput.trim());
-                if(output.trim() == CorrectOutput.trim()){
-                    res.json({verdict : true , output , CorrectOutput})
-                }
-                else
-                    res.json({verdict:false,  output , CorrectOutput})
-            });            
-        } catch (error) {
-            console.log(error);
+                runProcess.on('close', () => {
+                    // console.log('Output:', output);
+                    console.log(output.trim());
+                    console.log(CorrectOutput.trim());
+                    if (output.trim() == CorrectOutput.trim()) {
+                        res.json({ verdict: true, output, CorrectOutput })
+                    }
+                    else
+                        res.json({ verdict: false, output, CorrectOutput })
+                });
+            } catch (error) {
+                console.log(error);
+                res.json(error)
+            }
+
+
+        } else {
+            console.error('Compilation failed');
+            const error = { message: 'Compilation failed' }
             res.json(error)
         }
+    });
 
+})
 
-    } else {
-        console.error('Compilation failed');
-        const error={message : 'Compilation failed'}
-        res.json(error)
+app.post('/api/run' , async(req , res)=>{
+
+    try {
+
+        console.log("req received");
+        console.log("req at /api/run");
+
+        const {code , language , inputValue} = req.body.payload;
+        const filePath = await generateFile(code , extension[language])
+
+        let output;
+
+        if(language == "cpp"){
+            const jobId = await compileCpp(filePath)
+            output = await executeCpp(jobId , inputValue)
+        }
+
+        
+
+        res.json({code , output})        
+    } catch (error) {
+        console.log(error);
+        res.status(error.statusCode && 500).json(error)
     }
+})
+
+app.post('/api/submit' , async(req , res)=>{
+
+    try {
+
+        console.log("req at /api/submit");
+
+        const {code , language} = req.body.payload;
+        const filePath = await generateFile(code , extension[language])
+
+        let output;
+        const input = fs.readFileSync('./testcases/input.txt', { encoding: 'utf8', flag: 'r' });
+        const finalOutput = fs.readFileSync('./testcases/output.txt', { encoding: 'utf8', flag: 'r' });
+        CorrectOutput = finalOutput.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+
+        if(language == "cpp"){
+            const jobId = await compileCpp(filePath)
+            output = await executeCpp(jobId , input)
+        }
+        console.log("completed");
+        if(output.trim() == CorrectOutput.trim()){
+            res.json({verdict : true , output , CorrectOutput})
+        }
+        else{
+            res.json({verdict : false , output , CorrectOutput})
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(error.statusCode && 500).json(error)
+    }
+})
+
+app.use('*', (req, res) => {
+    res.sendFile(path.join(__dirname, "dist", "index.html"))
+})
+
+
+// Start the server
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
 });
-
-})
-
-app.use('*' , (req ,res)=>{
-    res.sendFile(path.join(__dirname , "dist" , "index.html"))
-})
