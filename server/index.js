@@ -8,6 +8,8 @@ const { v4: uuid } = require("uuid");
 const port = process.env.PORT || 3000;
 
 const {generateFile , extension , executeCpp , compileCpp} = require('./utils/methods');
+const {executePython} = require('./utils/pythonExecutor')
+const {compileJava , executeJava} = require('./utils/javaExecutor')
 
 app.use(cors())
 app.set("view engine", "ejs")
@@ -92,17 +94,21 @@ app.post('/api/run' , async(req , res)=>{
 
         let output;
 
-        if(language == "cpp"){
+        if(language == "cpp" || language=="c"){
             const jobId = await compileCpp(filePath)
             output = await executeCpp(jobId , inputValue)
         }
-
-        
-
+        else if(language == "python"){
+            output = await executePython(filePath , inputValue)
+        }
+        else if(language == "java"){
+            const filename = await compileJava(filePath)
+            output = await executeJava(filename , inputValue)
+        }
         res.json({code , output})        
     } catch (error) {
         console.log(error);
-        res.status(error.statusCode && 500).json(error)
+        res.status(error.statusCode || 500).json(error)
     }
 })
 
@@ -119,10 +125,18 @@ app.post('/api/submit' , async(req , res)=>{
         const input = fs.readFileSync('./testcases/input.txt', { encoding: 'utf8', flag: 'r' });
         const finalOutput = fs.readFileSync('./testcases/output.txt', { encoding: 'utf8', flag: 'r' });
         CorrectOutput = finalOutput.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+        // CorrectOutput = finalOutput
 
-        if(language == "cpp"){
+        if(language == "cpp" || language == "c"){
             const jobId = await compileCpp(filePath)
             output = await executeCpp(jobId , input)
+        }
+        else if(language == "python"){
+            output = await executePython(filePath , input)
+        }
+        else if(language == "java"){
+            const filename = await compileJava(filePath)
+            output = await executeJava(filename , input)
         }
         console.log("completed");
         if(output.trim() == CorrectOutput.trim()){

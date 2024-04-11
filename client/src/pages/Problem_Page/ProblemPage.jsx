@@ -30,16 +30,16 @@ export default function ProblemPage() {
                     <Description />
                 </Tab>
                 <Tab eventKey="Editor" title="Editor">
-                <CodeEditor setKey={setKey} setResultInfo={setResultInfo}/>
+                    <CodeEditor setKey={setKey} setResultInfo={setResultInfo} />
                 </Tab>
                 <Tab eventKey="Result" title="Result">
                     <div className="container">
-                <Result  resultInfo={resultInfo}/>
+                        <Result resultInfo={resultInfo} />
 
                     </div>
                 </Tab>
                 <Tab eventKey="Solution" title="Solution">
-                <Solution_code />
+                    <Solution_code />
                 </Tab>
             </Tabs>
 

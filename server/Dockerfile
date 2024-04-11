@@ -1,8 +1,9 @@
 # Use the official Node.js image as a base image
 FROM node:16
 
-# Install GCC
-RUN apt-get update && apt-get install -y gcc
+# Install GCC, Python, and the latest OpenJDK
+RUN apt-get update && \
+    apt-get install -y gcc python default-jdk
 
 # Create a directory for the Node.js server code
 WORKDIR /app

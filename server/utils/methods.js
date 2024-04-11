@@ -26,6 +26,15 @@ if (!fs.existsSync(dirOutput)) {
 
 //generates files, writes content, return path
 const generateFile = async (content, format) => {
+
+  if (!fs.existsSync(dirCodes)) {
+    fs.mkdirSync(dirCodes, { recursive: true });
+  }
+  if (!fs.existsSync(dirOutput)) {
+    fs.mkdirSync(dirOutput, { recursive: true });
+  }
+  
+
   const jobId = uuid();
   const filename = `${jobId}.${format}`;
   const filepath = path.join(dirCodes, filename);
@@ -42,11 +51,12 @@ function compileCpp(filepath) {
   let outPath = path.join(dirOutput, `${jobId}.out`);//In linux
 
   //remove in linux
-  filepath = JSON.stringify(filepath)
-  outPath = JSON.stringify(outPath)
+  // filepath = JSON.stringify(filepath)
+  // outPath = JSON.stringify(outPath)
 
   return new Promise((resolve, reject) => {
-    exec(`g++ ${filepath} -o ${outPath}`, (error, stdout, stderr) => {
+    // exec(`g++ ${filepath} -o ${outPath}`, (error, stdout, stderr) => {
+    exec(`g++ "${filepath}" -o "${outPath}"`, (error, stdout, stderr) => {
       if (error) {
         // reject({ error, stderr });
         reject(new ExpressError(400 , stderr , "compilation error"))
@@ -93,8 +103,6 @@ function executeCpp(jobId, input) {
         resolve(output);
       }
     });
-
-
   });
 }
 
