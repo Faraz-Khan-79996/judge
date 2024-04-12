@@ -5,6 +5,12 @@ FROM node:16
 RUN apt-get update && \
     apt-get install -y gcc python default-jdk
 
+# Set a build argument for the environment variable
+ARG CONNECTION_STRING
+# Set the environment variable in the container
+ENV CONNECTION_STRING=$CONNECTION_STRING 
+
+    
 # Create a directory for the Node.js server code
 WORKDIR /app
 

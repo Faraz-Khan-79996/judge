@@ -1,7 +1,7 @@
 import Alert from 'react-bootstrap/Alert';
 
 export default function Result({ resultInfo }) {
-    console.log(resultInfo);
+    // console.log(resultInfo);
     if (resultInfo == null) {
         return <></>
     }

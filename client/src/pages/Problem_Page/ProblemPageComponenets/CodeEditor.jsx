@@ -4,7 +4,7 @@ import Editor from '@monaco-editor/react';
 import axios from 'axios';
 import Spinner from 'react-bootstrap/Spinner';
 
-const CodeEditor = ({ setKey, setResultInfo }) => {
+const CodeEditor = ({ setKey, setResultInfo , _id , }) => {
     const [language, setLanguage] = useState('cpp');
     const [theme, setTheme] = useState('vs-dark');
     const [fontSize, setFontSize] = useState(14);
@@ -67,7 +67,8 @@ const CodeEditor = ({ setKey, setResultInfo }) => {
         }
 
         try {
-            const { data } = await axios.post('/api/submit', { payload });
+            // const { data } = await axios.post('/api/submit', { payload });
+            const { data } = await axios.post(`http://localhost:3000/api/submit/${_id}`, { payload });
             console.log(data);
             setResultInfo(data)
         } catch (e) {

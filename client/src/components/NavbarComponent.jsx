@@ -20,7 +20,7 @@ function NavbarComponent() {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link href="#action1">Home</Nav.Link>
+            <Link className='remove-underline' to="/create"><Nav.Link as={"span"}>Create Problem</Nav.Link></Link>
             <Nav.Link href="#action2">Coming soon</Nav.Link>
             <NavDropdown title="Link" id="navbarScrollingDropdown">
               <NavDropdown.Item href="#action3">Coming soon</NavDropdown.Item>

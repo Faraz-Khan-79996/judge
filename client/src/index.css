@@ -1,3 +1,17 @@
 .remove-underline{
     text-decoration: none;
 }
+/* 
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa;
+    text-align: center;
+}
+ */
+
+.middle{
+    margin: 50% 50%;
+}
