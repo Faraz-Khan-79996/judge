@@ -11,12 +11,13 @@ export default function RTE({ name, control, defaultValue = "", errors }) {
             <Controller
                 name={name || "content"}
                 control={control}
-                // rules={{ required: true }}
+                rules={{ required: true }}
                 render={({ field: { onChange } }) => (
                     <div>
 
                         <Editor
-                            apiKey={conf.tinyMceApiKey}
+                            // apiKey={conf.tinyMceApiKey}
+                            apiKey='xx25q38k5l9nsnjtri27bwba2boyruhu8y2hqlrjsiseacm7'
 
                             initialValue={defaultValue}
                             init={{

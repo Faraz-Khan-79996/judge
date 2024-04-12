@@ -9,25 +9,30 @@ import { useNavigate } from "react-router-dom";
 import Alert from 'react-bootstrap/Alert';
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Spinner from 'react-bootstrap/Spinner';
 
 export default function Create({ params }) {
 
     const navigate = useNavigate();
     const [failure, setFailure] = useState(false)
+    const [loading , setLoading] = useState(false)
+    
 
     const { register, handleSubmit, watch, setValue, control, getValues, formState: { errors } } = useForm();
 
     async function onSubmit(problem) {
         try {
+            setLoading(()=>true)
             console.log(problem);
 
-            const { data } = await axios.post("http://localhost:3000/api/create", { problem })
+            const { data } = await axios.post("/api/create", { problem })
             console.log(data);
             navigate(`/problem/${data._id}`)            
         } catch (error) {
             console.log(error);
             setFailure(error)
         }
+        setLoading(false)
     }
 
     if (failure) {
@@ -95,7 +100,13 @@ export default function Create({ params }) {
                     <Solutions control={control} errors={errors} />
                 </div>
                 <div className="row m-5">
-                    <button type="submit" className="btn btn-primary">Submit</button>
+                    <button type="submit" className="btn btn-primary">Submit{loading && (<Spinner
+                                as="span"
+                                animation="border"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true"
+                            />)}</button>
                 </div>
 
             </form>
