@@ -1,6 +1,7 @@
-.remove-underline{
+.remove-underline {
     text-decoration: none;
 }
+
 /* 
 .footer {
     position: fixed;
@@ -12,6 +13,12 @@
 }
  */
 
-.middle{
-    margin: 50% 50%;
+.middle {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 500px;
+    /* align-items:"center", */
 }

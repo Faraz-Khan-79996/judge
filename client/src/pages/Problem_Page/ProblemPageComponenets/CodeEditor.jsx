@@ -68,7 +68,7 @@ const CodeEditor = ({ setKey, setResultInfo , _id , }) => {
 
         try {
             // const { data } = await axios.post('/api/submit', { payload });
-            const { data } = await axios.post(`http://localhost:3000/api/submit/${_id}`, { payload });
+            const { data } = await axios.post(`/api/submit/${_id}`, { payload });
             console.log(data);
             setResultInfo(data)
         } catch (e) {

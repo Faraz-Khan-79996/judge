@@ -11,7 +11,7 @@ export default function RTE({ name, control, defaultValue = "", errors }) {
             <Controller
                 name={name || "content"}
                 control={control}
-                rules={{ required: true }}
+                // rules={{ required: true }}
                 render={({ field: { onChange } }) => (
                     <div>
 

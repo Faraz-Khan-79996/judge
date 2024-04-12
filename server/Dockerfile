@@ -9,6 +9,9 @@ RUN apt-get update && \
 ARG CONNECTION_STRING
 # Set the environment variable in the container
 ENV CONNECTION_STRING=$CONNECTION_STRING 
+ARG VITE_TinyMCE_KEY
+# Set the environment variable in the container
+ENV VITE_TinyMCE_KEY=$VITE_TinyMCE_KEY 
 
     
 # Create a directory for the Node.js server code
