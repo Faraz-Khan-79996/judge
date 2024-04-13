@@ -6,10 +6,17 @@ const mongoose = require('mongoose');
 require('dotenv').config()
 const port = process.env.PORT || 3000;
 const problemRouter = require('./routes/problem')
+const userRouter = require('./routes/user.js')
 
+const session = require('express-session')
+const MongoStore = require('connect-mongo')
+const passport = require('passport')
+const LocalStrategy = require('passport-local')
+const User = require('./models/user.js');
+const { isLoggedIn } = require('./middlewares/userMiddleware.js');
 
-
-app.use(cors())
+// app.use(cors())
+app.use(cors({ credentials: true, origin: 'http://localhost:5173' }));
 app.set("view engine", "ejs")
 
 app.use(express.json())
@@ -23,11 +30,43 @@ async function main() {
   console.log("database connected");
 }
 
+
+const mongostore = MongoStore.create({
+  mongoUrl : process.env.CONNECTION_STRING,
+  crypto :{
+      secret : "faraz the great",
+  },
+  touchAfter : 24 * 3600,//seconds
+})
+mongostore.on("error" , (err)=>{
+  console.log("ERR in MONGO SESSION STORE : " , err)
+})
+
+const sessionOptions = {
+  store : mongostore,//session info will be stored in atlas database.
+  secret : "faraz the great",
+  resave : false,
+  saveUninitialized : true,
+  cookie :{
+      //You only have to write one of 'maxAge' and 'expires'.
+      expires : Date.now() + 1*24*60*60*1000,//1 day
+      maxAge : 1*24*60*60*1000,
+      httpOnly : true,
+  }
+}
+app.use(session(sessionOptions))
+app.use(passport.initialize())
+app.use(passport.session())
+passport.use(new LocalStrategy(User.authenticate()))
+passport.serializeUser(User.serializeUser())//to serialize user into the session
+passport.deserializeUser(User.deserializeUser())//to de-serialize user into the session
+
 app.use('/api' , problemRouter)
+app.use('/api' , userRouter)
 
-
-
-
+app.get('/api/test' , isLoggedIn , (req , res)=>{
+  res.json("You are logged in")
+})
 
 app.use('*', (req, res) => {
     res.sendFile(path.join(__dirname, "dist", "index.html"))

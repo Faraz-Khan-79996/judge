@@ -1,9 +1,18 @@
-const express = require('express')
-const router = express.Router()
-// const passport = require('passport')
-// const middleware = require('../middleware.js')
-// const userController = require('../controller/user.js')
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+const passportLocalMongoose = require('passport-local-mongoose')
 
 
+const userSchema = new Schema({
+    email :{
+        type : String,
+    }
+})
 
-module.exports = router
+
+userSchema.plugin(passportLocalMongoose)
+//passport-local-mongoose will add 'username', 'hash' and 'salt' fields in schema.
+//it will also add methods to your schema. See the docs
+
+module.exports = mongoose.model("User" , userSchema)
+

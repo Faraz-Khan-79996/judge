@@ -7,12 +7,28 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link } from 'react-router-dom';
 import './component.css'
 
+import UserContext from '../context/UserContext';
+import { useContext } from 'react';
+
 function NavbarComponent() {
+
+  const { user , logout} = useContext(UserContext)
+
+  async function logoutHandler(ev) {
+    ev.preventDefault()
+    try {
+      await logout()
+    } catch (error) {
+      alert(error.message)
+    }
+  }
+
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
         <Link className='remove-underline' to="/"><Navbar.Brand>Code bavarchi</Navbar.Brand></Link>
-        
+
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -25,25 +41,44 @@ function NavbarComponent() {
             <NavDropdown title="Link" id="navbarScrollingDropdown">
               <NavDropdown.Item href="#action3">Coming soon</NavDropdown.Item>
               <NavDropdown.Item href="#action4">
-              Coming soon
+                Coming soon
               </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action5">
-              Coming soon
+                Coming soon
               </NavDropdown.Item>
             </NavDropdown>
             <Nav.Link href="#" disabled>
-            Coming soon
+              Coming soon
             </Nav.Link>
           </Nav>
           <Form className="d-flex">
-            <Form.Control
+            {/* <Form.Control
               type="search"
               placeholder="Search"
               className="me-2"
               aria-label="Search"
-            />
-            <Button variant="outline-success">Search</Button>
+            /> */}
+
+            {user ? null : (
+              <>
+                <Link to="/signup">
+                  <Button variant="outline-primary">Signup</Button>
+                </Link><span className='m-1'></span>
+                <Link to="/login">
+                  <Button variant="outline-success">Login</Button>
+                </Link>
+              </>
+            )}
+
+            {user ? (
+              <>  
+                  <h4 className='m-2'>@{user.username}</h4>
+                  <Button onClick={logoutHandler} variant="outline-danger">Logout</Button>            
+              </>
+            ):null}
+
+
           </Form>
         </Navbar.Collapse>
       </Container>

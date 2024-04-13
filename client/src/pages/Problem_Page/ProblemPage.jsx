@@ -76,7 +76,7 @@ export default function ProblemPage() {
 
     return (
         <div className="pt-1">
-            <Link to="/"><Button style={{ position: 'absolute', top: "5px", left: "5px", zIndex: 1000 }} variant="secondary"><ArrowLeft /></Button></Link>
+            <Link to="/"><Button style={{ position: 'absolute', top: "5px", left: "5px", zIndex: 1000,width : "60px" }} variant="secondary"><ArrowLeft /></Button></Link>
             <Tabs
                 defaultActiveKey="Description"
                 id="justify-tab-example"
