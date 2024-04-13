@@ -62,7 +62,7 @@ export default function HomePage() {
         <div>
             <div className="container">
 
-                {problems.length >0 && problems.map((problem)=><Problem_card {...problem} key={problem._id} />)}
+                {problems && problems.length >0 ? problems.map((problem)=><Problem_card {...problem} key={problem._id} />) : null}
             </div>
         </div>
     )

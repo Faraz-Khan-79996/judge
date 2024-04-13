@@ -100,7 +100,7 @@ export default function Create({ params }) {
                     <Solutions control={control} errors={errors} />
                 </div>
                 <div className="row m-5">
-                    <button type="submit" className="btn btn-primary">Submit{loading && (<Spinner
+                    <button type="submit" className="btn btn-primary">Submit{'  '}{loading && (<Spinner
                                 as="span"
                                 animation="border"
                                 size="sm"
