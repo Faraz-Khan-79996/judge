@@ -82,10 +82,11 @@ const CodeEditor = ({ setKey, setResultInfo , _id , }) => {
                 const customError = e.response.data
                 // console.log(e.response.data);
                 if (customError.type == "compilation error") {
-                    setResultInfo({ msg: customError.message })
+                    // setResultInfo({ msg: customError.message })
+                    setResultInfo(customError)
                 }
                 else if (customError.type == "execution failure") {
-                    setResultInfo({ msg: customError.message })
+                    setResultInfo(customError)
                 }
 
             } else if (e.request) {

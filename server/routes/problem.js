@@ -149,22 +149,25 @@ router.post('/submit/:id' , isLoggedIn ,async(req , res)=>{
         if(output.trim() == CorrectOutput.trim()){
             submission.status = "Accepted"
             submission.message = "Correct Output"
-            res.json({verdict : true , output , CorrectOutput})
-            await submission.save()
+            const submissionDoc = await submission.save()
+            res.json({verdict : true , output , CorrectOutput , submissionDoc})
             await User.findByIdAndUpdate(req.user._id, { $addToSet: { solved: id }})
         }
         else{
             submission.status = "Rejected"
             submission.message = "Wrong Answer"
-            res.json({verdict : false , output , CorrectOutput})
-            await submission.save()
+            const submissionDoc = await submission.save()
+            res.json({verdict : false , output , CorrectOutput , submissionDoc})
+            
         }
     } catch (error) {
         console.log(error);
-        res.status(error.statusCode ? error.statusCode : 500).json(error)
+        
         submission.status = "Rejected"
         submission.message = "Compilation Error"
-        await submission.save()
+        const submissionDoc = await submission.save()
+        error.submissionDoc = submissionDoc
+        res.status(error.statusCode ? error.statusCode : 500).json(error)
     }
 })
 

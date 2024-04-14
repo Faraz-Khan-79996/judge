@@ -1,56 +1,47 @@
 import Alert from 'react-bootstrap/Alert';
+import './result.css'
 
-export default function Result({ resultInfo }) {
+export default function Result({ resultInfo, submissionDoc = null }) {
     // console.log(resultInfo);
-    if (resultInfo == null) {
-        return <></>
-    }
-    if ("msg" in resultInfo) {
-        return (
-            <Alert variant="danger">
-            <Alert.Heading>Error Occurred</Alert.Heading>
-            <p>
-                Fix your code bruh....
-            </p>
-            <hr />
-            <p className="mb-0">
-                {resultInfo.msg}
-            </p>
-        </Alert>
-        )
-
-    }
-
-    if (resultInfo.verdict) {
-        return (
-            <div>
-                <Alert variant="success">
-                    <Alert.Heading>Solution Accepted</Alert.Heading>
-                    <p>
-                        Congratulations! Your solution has been accepted. You've shown exceptional problem-solving skills and a deep understanding of the concepts. This achievement reflects your dedication and perseverance. Keep up the fantastic work!
-                    </p>
-                    <hr />
-                    <p className="mb-0">
-                        Your ability to tackle complex coding challenges is truly impressive. Keep practicing and exploring new concepts. Your determination and skills are paving the way for your success.
-                    </p>
-                </Alert>
-            </div >
-        )
-    }
-    else {
-        return (
-            <Alert variant="danger">
-            <Alert.Heading>Submission Failed</Alert.Heading>
-            <p>
-                Oh no! Your submission did not pass all the test cases. Don't be disheartened; this is an opportunity to learn and improve. Review the requirements and test cases carefully, and try again. Keep pushing yourself, and you'll overcome this challenge!
-            </p>
-            <hr />
-            <p className="mb-0">
-                Remember, every setback is a stepping stone to success. Stay determined and keep honing your coding skills. You're on the right track!
-            </p>
-        </Alert>
-        )
-
+    if (resultInfo != null) {
+        return (<>
+            <div className="container">
+                <div className="result-container">
+                    <h2 className="result-heading">Submission Result</h2>
+                    <div className="result-details">
+                        <p><strong>Username :</strong> {resultInfo.submissionDoc.user}</p>
+                        <p><strong>Submission Time : </strong>{resultInfo.submissionDoc.createdAt}</p>
+                        <p><strong>Submission Id : </strong>{resultInfo.submissionDoc._id}</p>
+                        <p><strong>Problem : </strong>{resultInfo.submissionDoc.problemName}</p>
+                        <p><strong>Problem Id : </strong>{resultInfo.submissionDoc.problemId}</p>
+                        <p><strong>Email :</strong> {resultInfo.submissionDoc.email}</p>
+                        <p><strong>Language :</strong>{resultInfo.submissionDoc.language}</p>
+                        <p><strong>Status :</strong> {resultInfo.submissionDoc.status == "Accepted" ? <span class="badge rounded-pill bg-success">Accepted</span> : <span class="badge rounded-pill bg-danger">Rejected</span>}</p>
+                        <p><strong>Message :</strong> {resultInfo.submissionDoc.message}</p>
+                    </div>
+                    <div className="result-code">
+                        <pre><code>{resultInfo.submissionDoc.code}</code></pre>
+                    </div>
+                    <div>
+                        {"message" in resultInfo ? (
+                            <Alert variant="danger">
+                                <Alert.Heading>{resultInfo.type}</Alert.Heading>
+                                <p>
+                                    Fix your code bruh....
+                                </p>
+                                <hr />
+                                <p className="mb-0">
+                                    {resultInfo.message}
+                                </p>
+                            </Alert>
+                        )
+                            : null}
+                        
+                    </div>
+                    {/* <button className="btn btn-custom">Submit Another Problem</button> */}
+                </div>
+            </div>
+        </>)
     }
 
 }
