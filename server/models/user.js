@@ -6,7 +6,14 @@ const passportLocalMongoose = require('passport-local-mongoose')
 const userSchema = new Schema({
     email :{
         type : String,
-    }
+    },
+    solved: {
+        type: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Problem'
+        }],
+        unique: true
+    },
 })
 
 
@@ -14,5 +21,6 @@ userSchema.plugin(passportLocalMongoose)
 //passport-local-mongoose will add 'username', 'hash' and 'salt' fields in schema.
 //it will also add methods to your schema. See the docs
 
-module.exports = mongoose.model("User" , userSchema)
+const User = mongoose.model("User" , userSchema)
+module.exports = User
 

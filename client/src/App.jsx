@@ -8,6 +8,8 @@ import Create from './pages/Create_Problem/Create';
 import Signup from './pages/Signup';
 import LoginPage from './pages/LoginPage';
 import UserContextProvider from './context/UserContextProvider';
+import PrivateRoute from './components/PrivateRoute';
+import StandingPage from './pages/standings/StandingPage';
 
 function App() {
   return (
@@ -17,9 +19,12 @@ function App() {
           <Route path='/' element={<HomeLayout />}>
             <Route index element={<HomePage />} />
             <Route path='/create' element={<Create />} />
+            <Route path='/submissions' element={<StandingPage />} />
 
           </Route>
-          <Route path='/problem/:id' element={<ProblemPage />} />
+          {/* <Route path='/problem/:id' element={<ProblemPage />} /> */}
+          <Route path='/problem/:id' element={<PrivateRoute component={ProblemPage} redirectPath={"/login"}/>} />
+          
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<LoginPage />} />
         </Routes>

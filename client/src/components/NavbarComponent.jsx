@@ -37,7 +37,8 @@ function NavbarComponent() {
             navbarScroll
           >
             <Link className='remove-underline' to="/create"><Nav.Link as={"span"}>Create Problem</Nav.Link></Link>
-            <Nav.Link href="#action2">Coming soon</Nav.Link>
+            <Link className='remove-underline' to="/submissions"><Nav.Link as={"span"}>Submissions</Nav.Link></Link>
+            {/* <Nav.Link href="#action2">Coming soon</Nav.Link> */}
             <NavDropdown title="Link" id="navbarScrollingDropdown">
               <NavDropdown.Item href="#action3">Coming soon</NavDropdown.Item>
               <NavDropdown.Item href="#action4">

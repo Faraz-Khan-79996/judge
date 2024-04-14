@@ -50,9 +50,27 @@ const UserContextProvider = ({ children }) => {
             throw error
         }
     }
+    const updateUser = async()=>{
+        try {
+            axios.get('/api/profile' , {
+                withCredentials : true
+            })
+            .then(({data}) =>{
+                setUser(()=>data)
+            })
+            .catch(e=>{
+                //If there's no response, there's something wrong on making the request it self
+                if(!e.response){
+                    alert(e.message)
+                }            
+            })
+        } catch (error) {
+            throw error
+        }
+    }
 
     return (
-        <UserContext.Provider value={{ user, setUser , login , logout ,signup }}>
+        <UserContext.Provider value={{ user, setUser , login , logout ,signup, updateUser}}>
             {children}
         </UserContext.Provider>
     );

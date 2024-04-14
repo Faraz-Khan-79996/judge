@@ -3,14 +3,9 @@ import Problem_card from "../components/Problem_card"
 import axios from "axios"
 import FadeLoader from "react-spinners/FadeLoader";
 import Alert from 'react-bootstrap/Alert';
+import Loader from "../components/Loader";
 
 export default function HomePage() {
-
-    const override = {
-        display: "block",
-        margin: "0 auto",
-        borderColor: "red",
-    };
 
     const [problems, setProblems] = useState(null)
     const [loading, setLoading] = useState(true)
@@ -31,16 +26,7 @@ export default function HomePage() {
 
     if (loading) {
         return (
-            <div className="middle">
-                <FadeLoader
-                    color={"green"}
-                    loading={loading}
-                    cssOverride={override}
-                    size={150}
-                    aria-label="Loading Spinner"
-                    data-testid="loader"
-                />
-            </div>
+            <Loader color="blue"/>
         )
     }
 

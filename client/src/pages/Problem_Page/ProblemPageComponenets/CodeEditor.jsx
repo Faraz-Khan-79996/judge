@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import Editor from '@monaco-editor/react';
 import axios from 'axios';
 import Spinner from 'react-bootstrap/Spinner';
+import UserContext from '../../../context/UserContext';
 
 const CodeEditor = ({ setKey, setResultInfo , _id , }) => {
     const [language, setLanguage] = useState('cpp');
@@ -14,6 +15,8 @@ const CodeEditor = ({ setKey, setResultInfo , _id , }) => {
     // const [submittedButton, setSubmittedButton] = useState(null);
     const [loadingRun, setLoadingRun] = useState(false)
     const [loadingSubmit, setLoadingSubmit] = useState(false)
+
+    const {updateUser} = useContext(UserContext)
 
 
     const handleOutputChange = (e) => {
@@ -71,6 +74,7 @@ const CodeEditor = ({ setKey, setResultInfo , _id , }) => {
             const { data } = await axios.post(`/api/submit/${_id}`, { payload });
             console.log(data);
             setResultInfo(data)
+            updateUser()
         } catch (e) {
             if (e.response) {
                 // The request was made and the server responded with a status code

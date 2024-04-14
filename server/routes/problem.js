@@ -9,7 +9,11 @@ const Problem = require('../models/problem')
 
 const {generateFile , extension , executeCpp , compileCpp} = require('../utils/methods');
 const {executePython} = require('../utils/pythonExecutor')
-const {compileJava , executeJava} = require('../utils/javaExecutor')
+const {compileJava , executeJava} = require('../utils/javaExecutor');
+const Submission = require('../models/submission');
+const User = require('../models/user')
+const { isLoggedIn } = require('../middlewares/userMiddleware');
+
 
 
 
@@ -101,21 +105,31 @@ router.get('/problem/:id' , async(req , res)=>{
     }
 })
 
-router.post('/submit/:id' , async(req , res)=>{
+router.post('/submit/:id' , isLoggedIn ,async(req , res)=>{
+    const {code , language} = req.body.payload;
+    const {id} = req.params;
 
+    const submission = new Submission({
+        user : req.user.username,
+        language,
+        code,
+        problemId : id,
+        userId : req.user._id,
+        email : req.user.email,
+    })
     try {
+        
+        console.log("req at /api/submit/:id");  
 
-        const {id} = req.params;
-
-        console.log("req at /api/submit/:id");
-
-        const {code , language} = req.body.payload;
+        
         const filePath = await generateFile(code , extension[language])
 
         let output;
         const problemDoc = await Problem.findById(id)
         const CorrectOutput = problemDoc.output
         const input = problemDoc.input
+
+        submission.problemName = problemDoc.name;
 
         if(language == "cpp" || language == "c"){
             const jobId = await compileCpp(filePath)
@@ -129,18 +143,28 @@ router.post('/submit/:id' , async(req , res)=>{
             output = await executeJava(filename , input)
         }
         console.log("completed");
-
         output = output.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
 
+
         if(output.trim() == CorrectOutput.trim()){
+            submission.status = "Accepted"
+            submission.message = "Correct Output"
             res.json({verdict : true , output , CorrectOutput})
+            await submission.save()
+            await User.findByIdAndUpdate(req.user._id, { $addToSet: { solved: id }})
         }
         else{
+            submission.status = "Rejected"
+            submission.message = "Wrong Answer"
             res.json({verdict : false , output , CorrectOutput})
+            await submission.save()
         }
     } catch (error) {
         console.log(error);
         res.status(error.statusCode ? error.statusCode : 500).json(error)
+        submission.status = "Rejected"
+        submission.message = "Compilation Error"
+        await submission.save()
     }
 })
 
