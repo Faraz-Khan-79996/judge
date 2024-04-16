@@ -14,6 +14,14 @@ const isLoggedIn  = (req , res , next)=>{
     next()
 }
 
+const isAdmin = async(req , res , next)=>{
+    if(req.user.isAdmin == true){
+        next()
+    }
+    else{
+        return res.status(401).json({message : "Restricted for admins Only"})
+    }
+}
 module.exports = {
     isLoggedIn,
 }

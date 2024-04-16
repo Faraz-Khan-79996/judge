@@ -36,7 +36,7 @@ function NavbarComponent() {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Link className='remove-underline' to="/create"><Nav.Link as={"span"}>Create Problem</Nav.Link></Link>
+            <Link className='remove-underline' to="/admin/dashboard"><Nav.Link as={"span"}>Admin Panel</Nav.Link></Link>
             <Link className='remove-underline' to="/submissions"><Nav.Link as={"span"}>Submissions</Nav.Link></Link>
             {/* <Nav.Link href="#action2">Coming soon</Nav.Link> */}
             <NavDropdown title="Link" id="navbarScrollingDropdown">

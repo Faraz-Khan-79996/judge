@@ -46,7 +46,8 @@ export default function LoginPage() {
             {/* ************************************* */}
             <Link to="/"><Button style={{ position: 'absolute', top: "5px", left: "5px", zIndex: 1000 , width : "60px"}} variant="secondary"><ArrowLeft /></Button></Link>
             <div className="row mt-5 pt-5">
-                <h1 className="col-6 offset-3">Login</h1>
+                <h1 className="col-6 offset-3">Login <Link to="/signup"><button className="btn btn-lg btn-warning">Signup</button> </Link></h1>
+                
                 <div className="col-6 offset-3">
                         <form onSubmit={handleSubmit(onSubmit)}>
 

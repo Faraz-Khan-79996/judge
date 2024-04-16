@@ -10,6 +10,11 @@ import LoginPage from './pages/LoginPage';
 import UserContextProvider from './context/UserContextProvider';
 import PrivateRoute from './components/PrivateRoute';
 import StandingPage from './pages/standings/StandingPage';
+import AdminRoute from './components/AdminRoute';
+import AdminDashboard from './pages/Admin Panel/AdminDashboard';
+import MainPage from './pages/Admin Panel/admin_pages/MainPage';
+import Problems from './pages/Admin Panel/admin_pages/Problems';
+import Users from './pages/Admin Panel/admin_pages/Users';
 
 function App() {
   return (
@@ -18,15 +23,29 @@ function App() {
         <Routes>
           <Route path='/' element={<HomeLayout />}>
             <Route index element={<HomePage />} />
-            <Route path='/create' element={<Create />} />
-            <Route path='/submissions' element={<StandingPage />} />
 
+            <Route path='/submissions' element={<StandingPage />} />
           </Route>
           {/* <Route path='/problem/:id' element={<ProblemPage />} /> */}
-          <Route path='/problem/:id' element={<PrivateRoute component={ProblemPage} redirectPath={"/login"}/>} />
-          
+          <Route path='/problem/:id' element={<PrivateRoute component={ProblemPage} redirectPath={"/login"} />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<LoginPage />} />
+
+          {/* <Route path="/admin" element={<HomeLayout />}>
+            <Route path="" element={<AdminRoute component={AdminDashboard} redirectPath={"/login"} />}>
+
+            </Route>
+              <Route path='create' element={<AdminRoute component={Create} redirectPath={"/login"} />} />
+          </Route> */}
+
+          <Route path="/admin" element={<AdminDashboard />}>
+            <Route path='dashboard' element={<AdminRoute component={MainPage} redirectPath={"/login"} />} />
+            <Route path='create' element={<AdminRoute component={Create} redirectPath={"/login"} />} />
+            <Route path='problems' element={<AdminRoute component={Problems} redirectPath={"/login"} />} />
+            <Route path='users' element={<AdminRoute component={Users} redirectPath={"/login"} />} />
+          </Route>
+
+
         </Routes>
       </UserContextProvider>
     </>

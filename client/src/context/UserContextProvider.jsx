@@ -1,23 +1,28 @@
 import { useEffect, useState } from "react";
 import UserContext from "./UserContext";
 import axios from 'axios'
+import Loader from "../components/Loader";
 
 const UserContextProvider = ({ children }) => {
 
     const [user, setUser] = useState(null)
+    const [loading , setLoading] = useState(true)
 
     useEffect(()=>{
+        console.log(loading);
         axios.get('/api/profile' , {
             withCredentials : true
         })
         .then(({data}) =>{
             setUser(()=>data)
+            setLoading(()=>false)    
         })
         .catch(e=>{
             //If there's no response, there's something wrong on making the request it self
             if(!e.response){
                 alert(e.message)
-            }            
+            }
+            setLoading(()=>false)                
         })
     } , [])
 
@@ -69,11 +74,17 @@ const UserContextProvider = ({ children }) => {
         }
     }
 
-    return (
-        <UserContext.Provider value={{ user, setUser , login , logout ,signup, updateUser}}>
-            {children}
-        </UserContext.Provider>
-    );
+    if(loading){
+        return <Loader />
+    }
+    else{
+        return (
+            <UserContext.Provider value={{ user, setUser , login , logout ,signup, updateUser}}>
+                {children}
+            </UserContext.Provider>
+        );
+    }
+
 }
 
 export default UserContextProvider;

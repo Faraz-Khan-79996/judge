@@ -4,8 +4,8 @@ const passportLocalMongoose = require('passport-local-mongoose')
 
 
 const userSchema = new Schema({
-    email :{
-        type : String,
+    email: {
+        type: String,
     },
     solved: {
         type: [{
@@ -14,6 +14,10 @@ const userSchema = new Schema({
         }],
         unique: true
     },
+    isAdmin: {
+        type: Boolean,
+        default: false // Default value is false
+    }
 })
 
 

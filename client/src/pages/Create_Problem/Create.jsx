@@ -16,7 +16,7 @@ export default function Create({ params }) {
     const navigate = useNavigate();
     const [failure, setFailure] = useState(false)
     const [loading , setLoading] = useState(false)
-    
+
 
     const { register, handleSubmit, watch, setValue, control, getValues, formState: { errors } } = useForm();
 
@@ -27,7 +27,7 @@ export default function Create({ params }) {
 
             const { data } = await axios.post("/api/create", { problem })
             console.log(data);
-            navigate(`/problem/${data._id}`)            
+            navigate(`/problem/${data._id}`)
         } catch (error) {
             console.log(error);
             setFailure(error)
@@ -37,18 +37,18 @@ export default function Create({ params }) {
 
     if (failure) {
         return (
-          <Alert variant="danger">
-            <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
-            <p>
-              {failure.message}
-            </p>
-            <p>
-              {failure.response?.data.message}
-            </p>
-            <Link to="/"><button className="btn btn-success btn-lg">Go back</button></Link> 
-          </Alert>
+            <Alert variant="danger">
+                <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+                <p>
+                    {failure.message}
+                </p>
+                <p>
+                    {failure.response?.data.message}
+                </p>
+                <Link to="/"><button className="btn btn-success btn-lg">Go back</button></Link>
+            </Alert>
         );
-      }
+    }
 
     return (
         <div className="container mt-5 mb-5">
@@ -101,12 +101,12 @@ export default function Create({ params }) {
                 </div>
                 <div className="row m-5">
                     <button type="submit" className="btn btn-primary">Submit{'  '}{loading && (<Spinner
-                                as="span"
-                                animation="border"
-                                size="sm"
-                                role="status"
-                                aria-hidden="true"
-                            />)}</button>
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                    />)}</button>
                 </div>
 
             </form>
