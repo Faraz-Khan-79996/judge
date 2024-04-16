@@ -78,6 +78,7 @@ export default function ProblemPage() {
         <div className="pt-1">
             <Link to="/"><Button style={{ position: 'absolute', top: "5px", left: "5px", zIndex: 1000,width : "60px" }} variant="secondary"><ArrowLeft /></Button></Link>
             <Tabs
+                variant='underline'
                 defaultActiveKey="Description"
                 id="justify-tab-example"
                 className="mb-3"
