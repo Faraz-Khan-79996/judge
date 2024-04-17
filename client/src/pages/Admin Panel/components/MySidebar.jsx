@@ -71,7 +71,7 @@ const Sidebar = ({ children }) => {
                 className={` ${open ? "tw-w-60" : "tw-w-20"} tw-bg-slate-800 tw-h-100vh tw-p-5  tw-pt-8 tw-relative tw-duration-300`}
             >
                 <img
-                    src="../../src/assets/control.png"
+                    src="https://res.cloudinary.com/dqasiuje0/image/upload/v1713351249/samples/hdcktek0v4n3qbqxg5md.png"
                     className={`tw-absolute tw-cursor-pointer -tw-right-3 tw-top-9 tw-w-7 tw-border-blue-900
             tw-border-2 tw-rounded-full  ${!open && "tw-rotate-180"}`}
                     onClick={() => setOpen(!open)}
@@ -80,7 +80,7 @@ const Sidebar = ({ children }) => {
             tw-border-2 tw-rounded-full  ${!open && "tw-rotate-180"}`} onClick={() => setOpen(!open)}/> */}
                 <div className="tw-flex tw-gap-x-4 tw-items-center">
                     <img
-                        src="../../src/assets/logo.png"
+                        src="https://res.cloudinary.com/dqasiuje0/image/upload/v1713351040/samples/dgpggz0zk8psfin2vybh.png"
                         className={`tw-cursor-pointer tw-duration-500 ${open && "tw-rotate-[360deg]"
                             }`}
                     />
