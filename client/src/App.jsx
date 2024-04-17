@@ -1,4 +1,4 @@
-// import './App.css'
+import './App.css'
 import { Route, Routes } from 'react-router-dom'
 
 import HomePage from './pages/HomePage';
@@ -15,6 +15,7 @@ import AdminDashboard from './pages/Admin Panel/AdminDashboard';
 import MainPage from './pages/Admin Panel/admin_pages/MainPage';
 import Problems from './pages/Admin Panel/admin_pages/Problems';
 import Users from './pages/Admin Panel/admin_pages/Users';
+import EditProblem from './pages/Admin Panel/admin_pages/EditProblem';
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
             <Route path='create' element={<AdminRoute component={Create} redirectPath={"/login"} />} />
             <Route path='problems' element={<AdminRoute component={Problems} redirectPath={"/login"} />} />
             <Route path='users' element={<AdminRoute component={Users} redirectPath={"/login"} />} />
+            <Route path='problem/edit/:id' element={<AdminRoute component={EditProblem} redirectPath={"/login"} />} />
           </Route>
 
 

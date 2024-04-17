@@ -46,7 +46,7 @@ export default function HomePage() {
 
     return (
         <div>
-            <div className="container">
+            <div className="container tw-mb-24">
 
                 {problems && problems.length >0 ? problems.map((problem)=><Problem_card {...problem} key={problem._id} />) : null}
             </div>

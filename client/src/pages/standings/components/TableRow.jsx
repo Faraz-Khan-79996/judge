@@ -34,13 +34,13 @@ export default function TableRow({ _id, user, email,
                 </td>
                 <td>{message}</td>
                 <td>
-                    <h6>{language}</h6>
+                    <h6 className="tw-font-semibold">{language}</h6>
                 </td>
                 <td>
-                    <h6>{formatDistanceToNow(createdAt, { addSuffix: true})}</h6>
+                    <h6 className="tw-font-semibold">{formatDistanceToNow(createdAt, { addSuffix: true})}</h6>
                 </td>
                 <td>
-                    <h6>{_id}</h6>
+                    <h6 className="tw-font-semibold">{_id}</h6>
                 </td>
                 <td>
                     <button onClick={() => setModalShow(true)} type="button" className="btn btn-primary btn-sm btn-rounded" >

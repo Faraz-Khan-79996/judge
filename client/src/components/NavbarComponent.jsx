@@ -74,7 +74,7 @@ function NavbarComponent() {
 
             {user ? (
               <>  
-                  <h4 className='m-2'>@{user.username}</h4>
+                  <h4 className='m-2 tw-font-semibold tw-text-lg'>@{user.username}</h4>
                   <Button onClick={logoutHandler} variant="outline-danger">Logout</Button>            
               </>
             ):null}

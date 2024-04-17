@@ -174,8 +174,8 @@ router.post('/submit/:id' , isLoggedIn ,async(req , res)=>{
 router.post('/create' , async(req , res)=>{
     try {
         
-        res.status(503).json({message : "Owner Of this site has closed this Route."})
-        return
+        // res.status(503).json({message : "Owner Of this site has closed this Route."})
+        // return
         console.log("Create request received!");
         const {problem} = req.body;
         problem.output = problem.output.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
@@ -185,9 +185,21 @@ router.post('/create' , async(req , res)=>{
 
         res.json(problemDoc)
     } catch (error) {
-        res.json(error)
+        res.status(500).json(error)
     }
 })
 
+router.put('/problem/:id' , async(req , res)=>{
+    try {
+        const {id} = req.params
+        const {problem} = req.body;
+        console.log("update req received! " , id);
+        console.log(problem);
+        const newProblem = await Problem.findByIdAndUpdate(id , problem , {new:true})
+        res.json(newProblem)
+    } catch (error) {
+        res.status(500).json(error)
+    }
+})
 
 module.exports = router

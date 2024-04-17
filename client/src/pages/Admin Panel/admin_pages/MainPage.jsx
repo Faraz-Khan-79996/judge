@@ -1,7 +1,7 @@
 export default function MainPage({ collapseHandler }) {
     return (
-        <div className="">
-            <h1>Hello</h1>
+        <div className="tw-flex tw-h-screen tw-justify-center tw-items-center">
+            <h1  className="tw-text-6xl tw-font-medium">Coming Soon {":-)"}</h1>
         </div>
     )
 }

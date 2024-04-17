@@ -55,5 +55,14 @@ router.get('/logout', (req, res) => {
 router.get('/profile' , userMiddleware.isLoggedIn ,(req , res)=>{
     res.json(req.user)
 })
+
+router.get('/users' , async(req , res)=>{
+    try {
+        const users = await User.find()
+        res.json(users)
+    } catch (error) {
+        res.status(500).json(error)
+    }
+})
 module.exports = router
 

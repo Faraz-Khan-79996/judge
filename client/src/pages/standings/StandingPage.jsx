@@ -29,24 +29,26 @@ export default function StandingPage() {
     }
 
     return (
-        <div className="container mt-5">
-            <table className="table align-middle mb-0 bg-white">
-                <thead className="bg-light">
-                    <tr>
-                        <th>User</th>
-                        <th>Problem</th>
-                        <th>Status</th>
-                        <th>Message</th>
-                        <th>Language</th>
-                        <th>Submitted at</th>
-                        <th>Submission Id</th>
-                        <th>Code</th>
-                    </tr>
-                </thead>
-                <tbody >
-                    {submissions && submissions.map((submission)=><TableRow key={submission._id} {...submission}/>)}
-                </tbody>
-            </table>
+        <div className="container mt-5 tw-overflow-scroll tw-h-screen">
+            <div className="tw-h-3/4">
+                <table className="table align-middle mb-0 bg-white">
+                    <thead className="bg-light">
+                        <tr>
+                            <th>User</th>
+                            <th>Problem</th>
+                            <th>Status</th>
+                            <th>Message</th>
+                            <th>Language</th>
+                            <th>Submitted at</th>
+                            <th>Submission Id</th>
+                            <th>Code</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        {submissions && submissions.map((submission) => <TableRow key={submission._id} {...submission} />)}
+                    </tbody>
+                </table>
+            </div>
         </div>
     )
 }
