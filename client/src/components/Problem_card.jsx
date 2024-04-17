@@ -30,7 +30,7 @@ function Problem_card({ _id , name , intro , difficulty}) {
 
   return (
     <Card className='mt-5'>
-      <Card.Header as="h5">{name}{" "}{isPresent && (<Badge pill bg="warning" text="dark">
+      <Card.Header as="h5"><span className='tw-text-lg tw-font-semibold'>{name}</span>{" "}{isPresent && (<Badge pill bg="warning" text="dark">
         Solved
       </Badge>)}</Card.Header>
       <Card.Body>

@@ -9,10 +9,11 @@ import './component.css'
 
 import UserContext from '../context/UserContext';
 import { useContext } from 'react';
+import {MoonStars , BrightnessHigh} from'react-bootstrap-icons'
 
 function NavbarComponent() {
 
-  const { user , logout} = useContext(UserContext)
+  const { user , logout , toggleDarkMode , darkMode} = useContext(UserContext)
 
   async function logoutHandler(ev) {
     ev.preventDefault()
@@ -53,6 +54,7 @@ function NavbarComponent() {
               Coming soon
             </Nav.Link>
           </Nav>
+            <button onClick={toggleDarkMode} className='btn'>{darkMode ? <MoonStars size={25} /> : <BrightnessHigh size={25} /> }</button>
           <Form className="d-flex">
             {/* <Form.Control
               type="search"
@@ -60,7 +62,6 @@ function NavbarComponent() {
               className="me-2"
               aria-label="Search"
             /> */}
-
             {user ? null : (
               <>
                 <Link to="/signup">

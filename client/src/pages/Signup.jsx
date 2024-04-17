@@ -51,7 +51,7 @@ export default function Signup() {
 
             {/* ****************************************************************** */}
             <div className="row mt-5 pt-5">
-                <h1 className="col-6 offset-3">SignUp</h1>
+                <h1 className="col-6 offset-3 tw-font-semibold tw-text-4xl tw-mb-8">SignUp</h1>
                 <div className="col-6 offset-3">
                     <form onSubmit={handleSubmit(onSubmit)}>
 

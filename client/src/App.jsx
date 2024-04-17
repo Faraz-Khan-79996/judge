@@ -1,5 +1,7 @@
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
+import UserContext from './context/UserContext';
+import { useContext , useState } from 'react';
 
 import HomePage from './pages/HomePage';
 import HomeLayout from './HomeLayout'
@@ -7,7 +9,7 @@ import ProblemPage from './pages/Problem_Page/ProblemPage'
 import Create from './pages/Create_Problem/Create';
 import Signup from './pages/Signup';
 import LoginPage from './pages/LoginPage';
-import UserContextProvider from './context/UserContextProvider';
+// import UserContextProvider from './context/UserContextProvider';
 import PrivateRoute from './components/PrivateRoute';
 import StandingPage from './pages/standings/StandingPage';
 import AdminRoute from './components/AdminRoute';
@@ -18,9 +20,12 @@ import Users from './pages/Admin Panel/admin_pages/Users';
 import EditProblem from './pages/Admin Panel/admin_pages/EditProblem';
 
 function App() {
+
+  const { darkMode} = useContext(UserContext)
+
   return (
-    <>
-      <UserContextProvider>
+    <div className={darkMode && "tw-dark"}>
+      {/* <UserContextProvider> */}
         <Routes>
           <Route path='/' element={<HomeLayout />}>
             <Route index element={<HomePage />} />
@@ -49,8 +54,8 @@ function App() {
 
 
         </Routes>
-      </UserContextProvider>
-    </>
+      {/* </UserContextProvider> */}
+    </div>
   )
 }
 
