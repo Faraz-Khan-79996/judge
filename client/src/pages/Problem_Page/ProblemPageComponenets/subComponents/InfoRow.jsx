@@ -60,8 +60,8 @@ export default function InfoRow({ problem , setProblem}) {
 
     return (
         <>
-            <div className="tw-flex tw-justify-between tw-items-center tw-bg-gray-200 tw-p-4 tw-rounded-md">
-                <div className="tw-flex tw-items-center tw-space-x-4">
+            <div className="tw-flex tw-flex-wrap sm:tw-justify-between tw-items-center tw-justify-start tw-bg-gray-200 tw-p-4 tw-rounded-md">
+                <div className="tw-flex sm:tw-justify-start tw-items-center tw-space-x-4">
                     <div>
                         {/* <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-6 tw-w-6 tw-text-blue-500" viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M10 3.448l1.304-1.303a5.999 5.999 0 0 1 8.489 8.49l-9.793 9.794a1 1 0 0 1-1.414 0l-9.794-9.794a5.999 5.999 0 0 1 8.489-8.49L10 3.448z" clipRule="evenodd" />
@@ -78,7 +78,7 @@ export default function InfoRow({ problem , setProblem}) {
                         <span className="tw-font-bold tw-text-red-500">Dislikes:</span> {problem.dislikes.length}
                     </div>
                 </div>
-                <div className="tw-flex tw-items-center tw-space-x-4">
+                <div className="tw-flex sm:tw-flex-wrap tw-justify-start tw-items-center tw-space-x-4">
                     <div>
                         <span className="tw-font-bold tw-text-green-500">Successful Submissions:</span> {problem.acceptedSubmissions}
                     </div>
