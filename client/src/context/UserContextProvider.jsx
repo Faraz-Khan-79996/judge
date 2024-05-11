@@ -70,6 +70,7 @@ const UserContextProvider = ({ children }) => {
             })
                 .then(({ data }) => {
                     setUser(() => data)
+                    // console.log("happened");
                 })
                 .catch(e => {
                     //If there's no response, there's something wrong on making the request it self

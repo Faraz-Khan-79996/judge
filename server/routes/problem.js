@@ -152,6 +152,12 @@ router.post('/submit/:id' , isLoggedIn ,async(req , res)=>{
             const submissionDoc = await submission.save()
             res.json({verdict : true , output , CorrectOutput , submissionDoc})
             await User.findByIdAndUpdate(req.user._id, { $addToSet: { solved: id }})
+
+            problemDoc.acceptedSubmissions++;
+            problemDoc.save();
+
+
+
         }
         else{
             submission.status = "Rejected"
@@ -159,6 +165,10 @@ router.post('/submit/:id' , isLoggedIn ,async(req , res)=>{
             const submissionDoc = await submission.save()
             res.json({verdict : false , output , CorrectOutput , submissionDoc})
             
+            
+            problemDoc.rejectedSubmissions++;
+            problemDoc.save();
+
         }
     } catch (error) {
         console.log(error);
@@ -168,6 +178,11 @@ router.post('/submit/:id' , isLoggedIn ,async(req , res)=>{
         const submissionDoc = await submission.save()
         error.submissionDoc = submissionDoc
         res.status(error.statusCode ? error.statusCode : 500).json(error)
+
+        const problem = await Problem.findById(id);
+        problem.rejectedSubmissions++;
+        problem.save()
+
     }
 })
 
@@ -193,8 +208,8 @@ router.put('/problem/:id' , async(req , res)=>{
     try {
         const {id} = req.params
         const {problem} = req.body;
-        console.log("update req received! " , id);
-        console.log(problem);
+        // console.log("update req received! " , id);
+        // console.log(problem);
         const newProblem = await Problem.findByIdAndUpdate(id , problem , {new:true})
         res.json(newProblem)
     } catch (error) {
@@ -202,4 +217,56 @@ router.put('/problem/:id' , async(req , res)=>{
     }
 })
 
-module.exports = router
+router.put('/problem/:id/like' , async(req  , res )=>{
+    const userId = req.user._id
+    const {id} = req.params;
+
+    // const new_doc = await Problem.findByIdAndUpdate(id , {$inc :{likes : 1}} , {new : true})
+    
+    
+    
+    await Problem.findByIdAndUpdate(id, { $pull: { dislikes: userId } })
+    const new_doc = await Problem.findByIdAndUpdate(id, { $addToSet: { likes: userId } } , {new : true})
+
+    res.status(200).json(new_doc)   
+    await User.findByIdAndUpdate(userId, { $pull: { dislikedProblems: id } })
+    await User.findByIdAndUpdate(userId, { $addToSet: { likedProblems: id } })
+
+})
+router.put('/problem/:id/dislike' , async(req  , res )=>{
+    const userId = req.user._id
+    const {id} = req.params;
+    // const new_doc = await Problem.findByIdAndUpdate(id , {$inc :{dislikes : 1}} , {new : true})
+
+    await Problem.findByIdAndUpdate(id, { $pull: { likes: userId } })
+    const new_doc = await Problem.findByIdAndUpdate(id, { $addToSet: { dislikes: userId } } , {new:true})
+
+    res.status(200).json(new_doc)   
+
+    await User.findByIdAndUpdate(userId, { $addToSet: { dislikedProblems: id } })
+    await User.findByIdAndUpdate(userId, { $pull: { likedProblems: id } })    
+})
+
+router.put('/problem/:id/remove' , async (req , res)=>{
+
+    const {remove} = req.query;
+    const userId = req.user._id
+    const {id} = req.params;
+
+    console.log('remove req');
+
+    if(remove == "unlike"){
+        await User.findByIdAndUpdate(userId, { $pull: { likedProblems: id } })
+        const new_doc = await Problem.findByIdAndUpdate(id, { $pull: { likes: userId } } , {new : true})   
+        
+        res.status(200).json(new_doc)
+    }
+    else{
+        await User.findByIdAndUpdate(userId, { $pull: { dislikedProblems: id } })
+        const new_doc = await Problem.findByIdAndUpdate(id, { $pull: { dislikes: userId } } , {new : true})
+
+        res.status(200).json(new_doc)
+    }
+})
+
+module.exports = router 

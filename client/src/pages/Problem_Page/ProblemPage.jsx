@@ -13,7 +13,7 @@ import axios from 'axios'
 import Alert from 'react-bootstrap/Alert';
 
 export default function ProblemPage() {
-
+    // console.log("re-render");
     const {id} = useParams()
 
     const [key, setKey] = useState('Description');
@@ -32,7 +32,7 @@ export default function ProblemPage() {
     useEffect(() => {
         axios.get(`/api/problem/${id}`)
         .then(({ data }) => {
-            console.log(data);
+            // console.log(data);
             setProblem(() => data)
             setLoading(() => false)
         })
@@ -87,7 +87,7 @@ export default function ProblemPage() {
                 justify
             >
                 <Tab eventKey="Description" title="Description">
-                    <Description {...problem} />
+                    <Description problem={problem} setProblem={setProblem} />
                 </Tab>
                 <Tab eventKey="Editor" title="Editor">
                     <CodeEditor setKey={setKey} setResultInfo={setResultInfo} {...problem} />

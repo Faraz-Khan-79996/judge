@@ -17,6 +17,20 @@ const userSchema = new Schema({
     isAdmin: {
         type: Boolean,
         default: false // Default value is false
+    },
+    likedProblems : {
+        type: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Problem'
+        }],
+        unique: true
+    },
+    dislikedProblems : {
+        type: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Problem'
+        }],
+        unique: true
     }
 })
 

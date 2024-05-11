@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Problem = require('../models/problem')
 
-require('dotenv').config()
+require('dotenv').config({ path: '../.env' })
 
 main().catch(err => console.log(err));
 
