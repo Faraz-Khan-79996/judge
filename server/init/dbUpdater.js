@@ -62,7 +62,38 @@ async function updateProblemSubmission() {
     // console.log("YUSSS");
 }
 
+async function updateTimeStamps() {
+    try {
+        const currentDate = new Date();
+
+        // Find all documents
+        const problems = await Problem.find();
+
+        // Iterate through each document
+        for (const problem of problems) {
+            const updatedProblem = {
+                ...problem.toObject(), // Convert Mongoose document to plain JavaScript object
+                updatedAt: currentDate, // Set updatedAt to current date
+            };
+
+            // Set createdAt if it doesn't exist
+            if (!problem.createdAt) {
+                updatedProblem.createdAt = currentDate;
+            }
+
+            // Replace the document with the updated one
+            await Problem.replaceOne({ _id: problem._id }, updatedProblem);
+        }
+        console.log('Timestamps added to existing documents.');
+        // mongoose.connection.close();
+    } catch (error) {
+        console.error('Error updating documents:', error);
+        // mongoose.connection.close();
+    }
+}
+
 //set will reset the given values
-updateProblem()
+// updateProblem()
 // updateUser()
 // updateProblemSubmission()
+updateTimeStamps()

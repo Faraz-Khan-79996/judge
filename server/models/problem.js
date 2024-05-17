@@ -42,9 +42,10 @@ const problemSchema = new Schema({
     },
     acceptanceRate : {
         type : Number,
-        // default : 100,
+        default : 100,
     }
-
+}, {
+    timestamps : true,
 });
 
 problemSchema.pre('save', function(next) {

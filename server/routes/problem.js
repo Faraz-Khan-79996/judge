@@ -88,7 +88,7 @@ router.post('/submit' , async(req , res)=>{
 
 router.get('/problems' , async(req , res)=>{
     try {
-        const problems = await Problem.find()
+        const problems = await Problem.find().sort({createdAt:-1})
         res.json(problems)
     } catch (error) {
         res.status(500).json(error)
