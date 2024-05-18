@@ -193,6 +193,7 @@ router.post('/create' , async(req , res)=>{
         // return
         console.log("Create request received!");
         const {problem} = req.body;
+        problem.author = req.user.username;
         problem.output = problem.output.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
         // console.log(req.body);
 

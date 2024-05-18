@@ -19,7 +19,8 @@ async function updateProblem() {
             // rejectedSubmissions: 0,
             // dislikes : [],
             // likes : [],
-            acceptanceRate : 100,
+            // acceptanceRate : 100,
+            author : "Faraz Khan",
         }
     })
 
@@ -93,7 +94,7 @@ async function updateTimeStamps() {
 }
 
 //set will reset the given values
-// updateProblem()
+updateProblem()
 // updateUser()
 // updateProblemSubmission()
-updateTimeStamps()
+// updateTimeStamps()

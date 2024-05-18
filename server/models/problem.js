@@ -17,6 +17,7 @@ const problemSchema = new Schema({
     cppSolution: String,
     javaSolution: String,
     pythonSolution: String,
+    author : String,
 
     acceptedSubmissions : {
         type : Number,
