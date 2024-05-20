@@ -32,6 +32,8 @@ const userSchema = new Schema({
         }],
         unique: true
     }
+},{
+    timestamps : true,
 })
 
 

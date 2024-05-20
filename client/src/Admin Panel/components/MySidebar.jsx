@@ -52,7 +52,7 @@ const Sidebar = ({ children }) => {
     const [rerender , setRerender] = useState(false)
 
     const { hash, pathname, search } = location;
-    console.log(pathname);
+    // console.log(pathname);
     const [open, setOpen] = useState(true);
     const Menus = [
         { title: "Dashboard", src: "Chart_fill" , path: "/admin/dashboard", icon :<House  size={25}/>},
@@ -65,10 +65,11 @@ const Sidebar = ({ children }) => {
         // { title: "Setting", src: "Setting" },
     ];
 
+
     return (
-        <div className="tw-flex">
+        <div className="tw-flex tw-flex-nowrap">
             <div
-                className={` ${open ? "tw-w-60" : "tw-w-20"} tw-bg-slate-800 tw-h-100vh tw-p-5  tw-pt-8 tw-relative tw-duration-300`}
+                className={` ${open ? "tw-w-60" : "tw-w-20"} tw-bg-slate-800 tw-h-screen tw-p-5  tw-pt-8 tw-sticky tw-top-0 tw-duration-300`}
             >
                 <img
                     src="https://res.cloudinary.com/dqasiuje0/image/upload/v1713351249/samples/hdcktek0v4n3qbqxg5md.png"
@@ -113,7 +114,7 @@ const Sidebar = ({ children }) => {
                     ))}
                 </ul>
             </div>
-            <div className="tw-h-full tw-flex-1">
+            <div className="tw-h-full tw-w-full">
                 {children}
             </div>
         </div>

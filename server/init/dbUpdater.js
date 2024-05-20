@@ -93,8 +93,37 @@ async function updateTimeStamps() {
     }
 }
 
+async function updateUserTimeStamps() {
+    try {
+        const users = await User.find();
+        
+
+        for (const user of users) {
+            
+            const userObject = user.toObject();
+
+            
+            if (!userObject.createdAt) {
+                userObject.createdAt = user._id.getTimestamp();
+            }
+            
+            
+            userObject.updatedAt = new Date();
+
+            
+            await User.replaceOne({ _id: user._id }, userObject);
+        }
+
+        console.log("Timestamps updated for all users.");
+    } catch (error) {
+        console.error("Error updating user timestamps:", error);
+    }
+}
+
 //set will reset the given values
-updateProblem()
+// updateProblem()
 // updateUser()
 // updateProblemSubmission()
 // updateTimeStamps()
+// updateUserTimeStamps()
+

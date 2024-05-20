@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 import MySidebar from './components/MySidebar';
 // import Create from '../Create_Problem/Create';
 import { Outlet } from 'react-router-dom';
-import NavbarComponent from '../../components/NavbarComponent';
-import FooterComponent from '../../components/FooterComponent';
+import NavbarComponent from '../components/NavbarComponent';
+import FooterComponent from '../components/FooterComponent';
 export default function AdminDashboard() {
 
 

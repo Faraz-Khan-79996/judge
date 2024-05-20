@@ -17,7 +17,7 @@ const UserContextProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        console.log(loading);
+        // console.log(loading);
         axios.get('/api/profile', {
             withCredentials: true
         })

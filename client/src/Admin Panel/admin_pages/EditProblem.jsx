@@ -1,6 +1,6 @@
-import RTE from "../../../components/RTE";
-import Solutions from "../../Create_Problem/components/Solutions";
-import CheckBoxes from "../../Create_Problem/components/CheckBoxes";
+import RTE from "../../components/RTE";
+import Solutions from "../../pages/Create_Problem/components/Solutions";
+import CheckBoxes from "../../pages/Create_Problem/components/CheckBoxes";
 
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message"
@@ -11,7 +11,7 @@ import Alert from 'react-bootstrap/Alert';
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Spinner from 'react-bootstrap/Spinner';
-import Loader from "../../../components/Loader";
+import Loader from "../../components/Loader";
 
 export default function EditProblem() {
     const navigate = useNavigate();

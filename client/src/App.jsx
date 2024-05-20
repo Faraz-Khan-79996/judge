@@ -13,18 +13,18 @@ import LoginPage from './pages/LoginPage';
 import PrivateRoute from './components/PrivateRoute';
 import StandingPage from './pages/standings/StandingPage';
 import AdminRoute from './components/AdminRoute';
-import AdminDashboard from './pages/Admin Panel/AdminDashboard';
-import MainPage from './pages/Admin Panel/admin_pages/MainPage';
-import Problems from './pages/Admin Panel/admin_pages/Problems';
-import Users from './pages/Admin Panel/admin_pages/Users';
-import EditProblem from './pages/Admin Panel/admin_pages/EditProblem';
+import AdminDashboard from './Admin Panel/AdminDashboard';
+import MainPage from './Admin Panel/admin_pages/main_page/MainPage';
+import Problems from './Admin Panel/admin_pages/Problems';
+import Users from './Admin Panel/admin_pages/Users';
+import EditProblem from './Admin Panel/admin_pages/EditProblem';
 
 function App() {
 
   const { darkMode} = useContext(UserContext)
 
   return (
-    <div className={darkMode && "tw-dark"}>
+    <div className={darkMode ? "tw-dark" : ""}>
       {/* <UserContextProvider> */}
         <Routes>
           <Route path='/' element={<HomeLayout />}>

@@ -2,7 +2,7 @@ import '../module.style.css'
 import ProblemTable from '../components/ProblemTable'
 import Alert from 'react-bootstrap/Alert';
 import { useEffect, useState } from "react"
-import Loader from '../../../components/Loader';
+import Loader from '../../components/Loader';
 import axios from 'axios';
 
 export default function Problems() {

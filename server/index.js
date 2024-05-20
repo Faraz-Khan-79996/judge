@@ -8,6 +8,7 @@ const port = process.env.PORT || 3000;
 const problemRouter = require('./routes/problem')
 const userRouter = require('./routes/user.js')
 const submissionRouter = require('./routes/submission.js')
+const siteRouter = require('./routes/site.js')
 
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
@@ -65,6 +66,7 @@ passport.deserializeUser(User.deserializeUser())//to de-serialize user into the 
 app.use('/api' , problemRouter)
 app.use('/api' , userRouter)
 app.use('/api' , submissionRouter)
+app.use('/api' , siteRouter)
 
 app.get('/api/test' , isLoggedIn , (req , res)=>{
   res.json("You are logged in")

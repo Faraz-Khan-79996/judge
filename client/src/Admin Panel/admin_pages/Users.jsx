@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import Loader from "../../../components/Loader"
+import Loader from "../../components/Loader"
 import UserTable from "../components/UserTable"
 import Alert from 'react-bootstrap/Alert';
 import { Link } from "react-router-dom";
