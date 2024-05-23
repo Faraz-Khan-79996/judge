@@ -18,6 +18,7 @@ import MainPage from './Admin Panel/admin_pages/main_page/MainPage';
 import Problems from './Admin Panel/admin_pages/Problems';
 import Users from './Admin Panel/admin_pages/Users';
 import EditProblem from './Admin Panel/admin_pages/EditProblem';
+import ProfilePage from './pages/Profile_page/ProfilePage';
 
 function App() {
 
@@ -31,11 +32,13 @@ function App() {
             <Route index element={<HomePage />} />
 
             <Route path='/submissions' element={<StandingPage />} />
+            <Route path='/user/:id' element={<ProfilePage />} />
           </Route>
           {/* <Route path='/problem/:id' element={<ProblemPage />} /> */}
           <Route path='/problem/:id' element={<PrivateRoute component={ProblemPage} redirectPath={"/login"} />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<LoginPage />} />
+          
 
           {/* <Route path="/admin" element={<HomeLayout />}>
             <Route path="" element={<AdminRoute component={AdminDashboard} redirectPath={"/login"} />}>

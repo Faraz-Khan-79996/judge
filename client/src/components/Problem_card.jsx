@@ -61,7 +61,7 @@ function Problem_card({ _id , name , intro , difficulty , createdAt , author}) {
       <p className="tw-mt-2 tw-text-gray-600 dark:tw-text-gray-400">{intro}</p>
     </div>
     <div className="tw-mt-4 tw-flex tw-items-center tw-justify-between">
-    {isPresent ? (<Button className='!tw-bg-green-500  tw-text-lg' variant="success"><Check2Circle className='tw-inline tw-mr-2' />Solved</Button>) : (<Link to={`/problem/${_id}`}>
+    {isPresent ? (<span className='tw-text-green-500 tw-font-semibold  tw-text-xl' variant="success"><Check2Circle fontSize={33} fontWeight={"bold"} className='tw-inline tw-mr-2' />Solved</span>) : (<Link to={`/problem/${_id}`}>
            <Button className='tw-text-lg' variant="secondary">Try out !</Button>
          </Link>)}
       <div className='tw-self-end tw-justify-self-end'>

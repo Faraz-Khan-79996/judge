@@ -1,4 +1,5 @@
 import {PersonCircle} from 'react-bootstrap-icons'
+import { Link } from 'react-router-dom'
 
 export default function UserTableRow({username , _id , email , isAdmin , solved , user='',
     problemName='', problemId='', userId='', language='', code='', status='', message='', createdAt=''}) {
@@ -41,9 +42,11 @@ export default function UserTableRow({username , _id , email , isAdmin , solved 
                         </button>
                     </td> */}
                     <td>
+                    <Link className='remove-underline' to={`/user/${_id}`}>
                     <button className="btn btn-primary btn-sm btn-rounded" >
-                            <PersonCircle/>
+                            <PersonCircle size={25}/>
                         </button>
+                            </Link>
                     </td>
                 </tr>
                 {/* <Solution
