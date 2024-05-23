@@ -30,8 +30,10 @@ async function updateProblem() {
 async function updateUser() {
     await User.updateMany({}, {
         $set: {
-            likedProblems: [],
-            dislikedProblems: [],
+            // likedProblems: [],
+            // dislikedProblems: [],
+            // submissions : [],
+            saved : [],
         }
     })
 
@@ -120,10 +122,31 @@ async function updateUserTimeStamps() {
     }
 }
 
+async function addSubmissionsToUser() {
+    
+    const users = await User.find({} , {_id : 1})
+
+    for({_id} of users){
+        
+        const submissions = await Submission.find({userId : _id} , {_id :1})
+        // console.log(submissions);
+
+        await User.findByIdAndUpdate(_id , {$set : {
+            submissions : submissions,
+        }});
+        
+
+        // console.log("****************************************************************************************");
+    }
+
+    console.log("Done");
+}
+
 //set will reset the given values
 // updateProblem()
 // updateUser()
 // updateProblemSubmission()
 // updateTimeStamps()
 // updateUserTimeStamps()
+// addSubmissionsToUser()
 

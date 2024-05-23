@@ -114,7 +114,7 @@ const Sidebar = ({ children }) => {
                     ))}
                 </ul>
             </div>
-            <div className="tw-h-full tw-w-full">
+            <div className="tw-h-full tw-w-full tw-min-w-0">
                 {children}
             </div>
         </div>

@@ -31,7 +31,20 @@ const userSchema = new Schema({
             ref: 'Problem'
         }],
         unique: true
-    }
+    },
+    submissions : {
+        type : [{
+            type: Schema.Types.ObjectId,
+            ref: 'Submission'
+        }]
+    },
+    saved : {
+        type : [{
+            type: Schema.Types.ObjectId,
+            ref: 'Problem'
+        }]
+    },
+    
 },{
     timestamps : true,
 })

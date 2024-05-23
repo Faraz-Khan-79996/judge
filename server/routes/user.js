@@ -56,7 +56,7 @@ router.get('/profile' , userMiddleware.isLoggedIn ,(req , res)=>{
     res.json(req.user)
 })
 
-router.get('/users' , async(req , res)=>{
+router.get('/users', async (req, res) => {
     try {
         const users = await User.find()
         res.json(users)
@@ -64,5 +64,21 @@ router.get('/users' , async(req , res)=>{
         res.status(500).json(error)
     }
 })
+
+router.get('/user/:id', async (req, res) => {
+    try {
+        const { id } = req.params
+        const user = await User.findById(id, { hash: 0, salt: 0 })
+            .populate('submissions')
+            .populate('dislikedProblems')
+            .populate('likedProblems')
+            .populate('solved')
+
+        res.status(200).send(user)
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
+
 module.exports = router
 
