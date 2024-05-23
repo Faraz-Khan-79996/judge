@@ -20,6 +20,7 @@
     "@mui/material": "^5.15.18",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "@tinymce/tinymce-react": "^5.0.1",
+    "@uiw/react-heat-map": "^2.2.2",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.3",
