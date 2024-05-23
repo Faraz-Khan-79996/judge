@@ -32,7 +32,7 @@ function App() {
             <Route index element={<HomePage />} />
 
             <Route path='/submissions' element={<StandingPage />} />
-            <Route path='/user/:id' element={<ProfilePage />} />
+            <Route path='/user/:username' element={<ProfilePage />} />
           </Route>
           {/* <Route path='/problem/:id' element={<ProblemPage />} /> */}
           <Route path='/problem/:id' element={<PrivateRoute component={ProblemPage} redirectPath={"/login"} />} />

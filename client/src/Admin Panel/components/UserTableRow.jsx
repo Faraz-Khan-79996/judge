@@ -42,7 +42,7 @@ export default function UserTableRow({username , _id , email , isAdmin , solved 
                         </button>
                     </td> */}
                     <td>
-                    <Link className='remove-underline' to={`/user/${_id}`}>
+                    <Link className='remove-underline' to={`/user/${username}`}>
                     <button className="btn btn-primary btn-sm btn-rounded" >
                             <PersonCircle size={25}/>
                         </button>

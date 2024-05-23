@@ -75,7 +75,7 @@ function NavbarComponent() {
 
             {user ? (
               <>  
-                  <h4 className='m-2 tw-font-semibold tw-text-lg'><Link className='remove-underline' to={`/user/${user._id}`}>@{user.username}</Link></h4>
+                  <h4 className='m-2 tw-font-semibold tw-text-lg'><Link className='remove-underline' to={`/user/${user.username}`}>@{user.username}</Link></h4>
                   <Button onClick={logoutHandler} variant="outline-danger">Logout</Button>            
               </>
             ):null}

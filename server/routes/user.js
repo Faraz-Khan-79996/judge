@@ -65,10 +65,10 @@ router.get('/users', async (req, res) => {
     }
 })
 
-router.get('/user/:id', async (req, res) => {
+router.get('/user/:username', async (req, res) => {
     try {
-        const { id } = req.params
-        const user = await User.findById(id, { hash: 0, salt: 0 })
+        const { username } = req.params
+        const user = await User.findOne({username : username}, { hash: 0, salt: 0 })
             .populate('submissions')
             .populate('dislikedProblems')
             .populate('likedProblems')

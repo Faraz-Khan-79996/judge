@@ -19,15 +19,15 @@ const ProfilePage = () => {
     const [darkMode, setDarkMode] = useState(false)
     const [value, setValue] = React.useState("1")    
 
-    // const id = "661c30e427b00f556e4e1362"
-    const {id} = useParams()
+    // const id = "test"
+    const {username} = useParams()
     
 
     useEffect(() => {
         async function doStuff() {
             try {
                 
-                const { data: userData } = await axios.get(`/api/user/${id}`)
+                const { data: userData } = await axios.get(`/api/user/${username}`)
 
                 const accepted = userData.submissions.filter(
                     (s) => s.status == "Accepted",
