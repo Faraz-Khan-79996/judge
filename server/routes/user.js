@@ -73,8 +73,39 @@ router.get('/user/:username', async (req, res) => {
             .populate('dislikedProblems')
             .populate('likedProblems')
             .populate('solved')
+            .populate('saved')
 
         res.status(200).send(user)
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
+
+router.put('/user/save' , userMiddleware.isLoggedIn ,async(req , res)=>{
+    try {
+        
+        const {problemId} = req.query;
+        const {_id , username} = req.user
+
+        const {saved} = await User.findByIdAndUpdate(_id , {$addToSet : {saved : problemId}} , {new : true})
+
+        res.status(200).json("ok")
+
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
+
+router.put('/user/unsave' , userMiddleware.isLoggedIn , async (req , res)=>{
+    try {
+        const {problemId} = req.query;
+        const {_id , username} = req.user
+        
+
+        const {saved} = await User.findByIdAndUpdate(_id , {$pull : {saved : problemId}} , {new : true})
+
+        res.status(200).json("ok")
+
     } catch (error) {
         res.status(500).send(error)
     }

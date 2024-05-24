@@ -1,4 +1,4 @@
-import { HandThumbsUpFill, HandThumbsDownFill, BrightnessHigh } from 'react-bootstrap-icons'
+import { HandThumbsUpFill, HandThumbsDownFill, Bookmark , BookmarkCheckFill } from 'react-bootstrap-icons'
 
 import UserContext from '../../../../context/UserContext'
 import { useContext , useEffect, useState } from 'react'
@@ -8,21 +8,25 @@ export default function InfoRow({ problem , setProblem}) {
 
     const [liked , setLiked] = useState(false)
     const [disliked , setDisliked] = useState(false)
+    const [saved , setSaved] = useState(false)
 
     const {user , updateUser} = useContext(UserContext)
-    console.log(user);
+    // console.log(user);
     
     useEffect(()=>{
         if(user.dislikedProblems.includes(problem._id)){
-            setDisliked(true)
+            setDisliked(prev => true)
         }
         else if(user.likedProblems.includes(problem._id)){
-            setLiked(true)
+            setLiked(prev => true)
+        }
+        if(user.saved.includes(problem._id)){
+            setSaved(prev => true)
         }
     } , [])
     
     async function handleLike(event) {
-        console.log("clicked");
+        // console.log("clicked");
         if(!liked){
             setLiked(prev => true)
             setDisliked(prev =>false)
@@ -40,7 +44,7 @@ export default function InfoRow({ problem , setProblem}) {
         updateUser()
     }
     async function handleDislike(event) {
-        console.log("clicked");
+        // console.log("clicked");
         if(!disliked){
             setLiked(prev => false)
             setDisliked(prev => true)
@@ -57,6 +61,24 @@ export default function InfoRow({ problem , setProblem}) {
 
         updateUser()
     }
+
+    async function addToBookmark(event) {
+        
+        try {
+            if(saved){
+                setSaved(prev => false)
+                await axios.put(`/api/user/unsave?problemId=${problem._id}` , {withCredentials: true})
+            }
+            else{
+                setSaved(prev => true)
+                await axios.put(`/api/user/save?problemId=${problem._id}` , {withCredentials: true})
+            }
+            updateUser()
+        } catch (error) {
+            alert(error.message)
+        }
+    }
+
 
     return (
         <>
@@ -76,6 +98,9 @@ export default function InfoRow({ problem , setProblem}) {
                     </div>
                     <div>
                         <span className="tw-font-bold tw-text-red-500">Dislikes:</span> {problem.dislikes.length}
+                    </div>
+                    <div>
+                        <button onClick={addToBookmark}><BookmarkCheckFill color={saved ? "blue" : "grey"} size={30}  /></button>
                     </div>
                 </div>
                 <div className="tw-flex sm:tw-flex-wrap tw-justify-start tw-items-center tw-space-x-4">
