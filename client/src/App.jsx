@@ -1,7 +1,7 @@
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import UserContext from './context/UserContext';
-import { useContext , useState } from 'react';
+import { useContext , useEffect, useState } from 'react';
 
 import HomePage from './pages/HomePage';
 import HomeLayout from './HomeLayout'

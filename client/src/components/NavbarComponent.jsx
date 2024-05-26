@@ -11,6 +11,9 @@ import UserContext from '../context/UserContext';
 import { useContext } from 'react';
 import {MoonStars , BrightnessHigh} from'react-bootstrap-icons'
 
+import { ToastContainer, toast, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function NavbarComponent() {
 
   const { user , logout , toggleDarkMode , darkMode} = useContext(UserContext)
@@ -19,6 +22,7 @@ function NavbarComponent() {
     ev.preventDefault()
     try {
       await logout()
+      toast.info('Logged OUT successfully');
     } catch (error) {
       alert(error.message)
     }

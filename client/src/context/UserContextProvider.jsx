@@ -8,6 +8,7 @@ const UserContextProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
     const [darkMode, setDarkMode] = useState(false);
+    const [showToast , setShowtoast] = useState(true)
 
     const toggleDarkMode = () => {
         // console.log("clicked!");
@@ -88,7 +89,7 @@ const UserContextProvider = ({ children }) => {
     }
     else {
         return (
-            <UserContext.Provider value={{ user, setUser, login, logout, signup, updateUser ,darkMode , toggleDarkMode }}>
+            <UserContext.Provider value={{ user, setUser, login, logout, signup, updateUser ,darkMode , toggleDarkMode , showToast , setShowtoast }}>
                 {children}
             </UserContext.Provider>
         );

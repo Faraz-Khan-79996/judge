@@ -8,6 +8,8 @@ import Spinner from 'react-bootstrap/Spinner';
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from 'react-bootstrap-icons';
+import { ToastContainer, toast, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function LoginPage() {
 
@@ -26,10 +28,12 @@ export default function LoginPage() {
 
         try {
             await login(username, password)
-            Navigate('/')
+            Navigate('/' , { state: { showLoginToast: true } })
+            
         } catch (error) {
             console.log(error);
             setErr(error)
+            toast.error('Failed to Log in!')
         }
         setLoading(false)
     }
@@ -37,6 +41,7 @@ export default function LoginPage() {
 
     return (
         <>
+            <ToastContainer />
             {err && (<Alert variant="danger" onClose={() => setErr(false)} dismissible>
                 <Alert.Heading>{err.response?.data || err.name}</Alert.Heading>
                 <p>
