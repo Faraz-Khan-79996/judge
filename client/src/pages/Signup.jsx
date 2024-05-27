@@ -26,7 +26,7 @@ export default function Signup() {
 
         try {
             await signup(username, password , email)
-            Navigate('/' , { state: { showSignupToast: true } })
+            Navigate('/' , { state: { showSignupToast: true } })//send state when navigating
         } catch (error) {
             if (error.response) {
                 setErr(() => error.response.data)

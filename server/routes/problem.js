@@ -13,6 +13,7 @@ const {compileJava , executeJava} = require('../utils/javaExecutor');
 const Submission = require('../models/submission');
 const User = require('../models/user')
 const { isLoggedIn } = require('../middlewares/userMiddleware');
+const {judgeOutput} = require('../utils/comparator')
 
 
 
@@ -144,6 +145,7 @@ router.post('/submit/:id' , isLoggedIn ,async(req , res)=>{
         }
         console.log("completed");
         output = output.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+        output = output.trim()
 
 
         if(output.trim() == CorrectOutput.trim()){
@@ -152,7 +154,7 @@ router.post('/submit/:id' , isLoggedIn ,async(req , res)=>{
             const submissionDoc = await submission.save()
             res.json({verdict : true , output , CorrectOutput , submissionDoc})
             await User.findByIdAndUpdate(req.user._id, { $addToSet: { solved: id }})
-
+            await User.findByIdAndUpdate(req.user._id, { $push : { submissions : submissionDoc._id } })
             problemDoc.acceptedSubmissions++;
             problemDoc.save();
 
@@ -163,9 +165,14 @@ router.post('/submit/:id' , isLoggedIn ,async(req , res)=>{
             submission.status = "Rejected"
             submission.message = "Wrong Answer"
             const submissionDoc = await submission.save()
-            res.json({verdict : false , output , CorrectOutput , submissionDoc})
+
+            const judgement = judgeOutput(CorrectOutput, output ,input)
+            // console.log(judgement);
+            // console.log(CorrectOutput.split('\n') , output.split('\n') , input.split('\n'));
+
+            res.json({verdict : false , output , CorrectOutput , submissionDoc , judgement})
             
-            
+            await User.findByIdAndUpdate(req.user._id, { $push : { submissions : submissionDoc._id } })
             problemDoc.rejectedSubmissions++;
             problemDoc.save();
 
@@ -178,7 +185,7 @@ router.post('/submit/:id' , isLoggedIn ,async(req , res)=>{
         const submissionDoc = await submission.save()
         error.submissionDoc = submissionDoc
         res.status(error.statusCode ? error.statusCode : 500).json(error)
-
+        await User.findByIdAndUpdate(req.user._id, { $push : { submissions : submissionDoc._id } })
         const problem = await Problem.findById(id);
         problem.rejectedSubmissions++;
         problem.save()

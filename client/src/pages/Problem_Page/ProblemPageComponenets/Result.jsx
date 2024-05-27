@@ -1,8 +1,13 @@
 import Alert from 'react-bootstrap/Alert';
 import './result.css'
+import OutputDiff from './subComponents/OutputDiff';
+import { useContext } from 'react';
+import UserContext from '../../../context/UserContext'
 
 export default function Result({ resultInfo, submissionDoc = null }) {
-    // console.log(resultInfo);
+    
+    const {darkMode} = useContext(UserContext)
+
     if (resultInfo != null) {
         return (<>
             <div className="container">
@@ -16,9 +21,12 @@ export default function Result({ resultInfo, submissionDoc = null }) {
                         <p><strong>Problem Id : </strong>{resultInfo.submissionDoc.problemId}</p>
                         <p><strong>Email :</strong> {resultInfo.submissionDoc.email}</p>
                         <p><strong>Language :</strong>{resultInfo.submissionDoc.language}</p>
-                        <p><strong>Status :</strong> {resultInfo.submissionDoc.status == "Accepted" ? <span class="badge rounded-pill bg-success">Accepted</span> : <span class="badge rounded-pill bg-danger">Rejected</span>}</p>
+                        <p><strong>Status :</strong> {resultInfo.submissionDoc.status == "Accepted" ? <span className="badge rounded-pill bg-success">Accepted</span> : <span className="badge rounded-pill bg-danger">Rejected</span>}</p>
                         <p><strong>Message :</strong> {resultInfo.submissionDoc.message}</p>
                     </div>
+
+                    {resultInfo.judgement ? <OutputDiff judgement={resultInfo.judgement} darkMode={darkMode}/> : null}
+                    
                     <div className="result-code">
                         <pre><code>{resultInfo.submissionDoc.code}</code></pre>
                     </div>

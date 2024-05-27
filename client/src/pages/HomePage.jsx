@@ -40,12 +40,12 @@ export default function HomePage() {
 
   useEffect(() => {
       if (location.state?.showLoginToast) {
-          toast.success('Logged in successfully');
+          toast.success('Logged in successfully' , {autoClose: 2000});
           navigate('.', { replace: true, state: null });
           //clear the state after showing the toast. If not, state will be there even if you refresh.
       }
       if (location.state?.showSignupToast) {
-          toast.success('Account Created Succesfully');
+          toast.success('Account Created Succesfully' , {autoClose: 2000});
           navigate('.', { replace: true, state: null });
           //clear the state after showing the toast. If not, state will be there even if you refresh.
       }

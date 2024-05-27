@@ -22,7 +22,7 @@ function NavbarComponent() {
     ev.preventDefault()
     try {
       await logout()
-      toast.info('Logged OUT successfully');
+      toast.info('Logged OUT successfully' , {autoClose: 2000});
     } catch (error) {
       alert(error.message)
     }

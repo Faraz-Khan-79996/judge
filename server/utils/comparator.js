@@ -1,5 +1,5 @@
-const path = require('path')
-const fs = require('fs')
+// const path = require('path')
+// const fs = require('fs')
 
 
 function joinEveryKStrings(arr, k) {
@@ -24,10 +24,16 @@ function joinEveryKStrings(arr, k) {
 
 function parseTestCases(input) {
     // Split the input string by newlines to get each line separately
-    let lines = input.split('\r\n');
+    let lines = input.split('\n');
+    const numTestCases = parseInt(lines[0], 10);
     lines.shift()
 
-    const numTestCases = parseInt(lines[0], 10);
+
+    if(numTestCases == lines.length){
+        // console.log(lines);
+        return lines
+    }
+
     const lines_per_testcase = lines.length / numTestCases
 
     
@@ -36,14 +42,19 @@ function parseTestCases(input) {
 
 function judgeOutput(correct, incorrect , input) {
 
-    correct = CorrectOutput.split('\r\n');
-    incorrect = incorrectOutput.split('\r\n');
-    input = parseTestCases(input)
+    correct = correct.trim()
+    incorrect = incorrect.trim()
+    input = input.trim()
 
+    correct = correct.split('\n');
+    incorrect = incorrect.split('\n');
+    // console.log(parseTestCases(input));
+    input = parseTestCases(input)
+    // console.log(input);
     if (correct.length !== incorrect.length) {
         return {
             correctFormat : false,
-            judgement : `Incorrect output length`,
+            result : `Incorrect output length`,
             passed : 0,
         }; // The first difference is at the end of the shorter array
     }
@@ -55,10 +66,11 @@ function judgeOutput(correct, incorrect , input) {
             return {
                 correctFormat : true,
                 passed: i,
-                correct: correct[i],
+                correctOutput   : correct[i],
                 userOutput: incorrect[i],
-                judgement : `Incorrect output at test case : ${i+1}`,
-                testCase : input[i]
+                result : `Incorrect output at test case : ${i+1}`,
+                testCase : input[i],
+                total : correct.length,
 
             }; // Return the index of the first differing element
         }
@@ -68,12 +80,15 @@ function judgeOutput(correct, incorrect , input) {
 }
 
 
-const CorrectOutput = fs.readFileSync('../testcases/output.txt', { encoding: 'utf8', flag: 'r' });
-const inputString = fs.readFileSync('../testcases/input.txt', { encoding: 'utf8', flag: 'r' });
-const incorrectOutput = fs.readFileSync('../testcases/incorrectOutput.txt', { encoding: 'utf8', flag: 'r' });
+// const CorrectOutput = fs.readFileSync('../testcases/output.txt', { encoding: 'utf8', flag: 'r' });
+// const inputString = fs.readFileSync('../testcases/input.txt', { encoding: 'utf8', flag: 'r' });
+// const incorrectOutput = fs.readFileSync('../testcases/incorrectOutput.txt', { encoding: 'utf8', flag: 'r' });
 
 
-console.log(judgeOutput(correct, incorrect , inputString));
+// console.log(judgeOutput(CorrectOutput, inputString , inputString));
 
 
 
+module.exports =  {
+    judgeOutput,
+}
