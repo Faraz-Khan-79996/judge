@@ -72,7 +72,7 @@ const CodeEditor = ({ setKey, setResultInfo , _id , }) => {
         try {
             // const { data } = await axios.post('/api/submit', { payload });
             const { data } = await axios.post(`/api/submit/${_id}`, { payload });
-            console.log(data);
+            // console.log(data);
             setResultInfo(data)
             updateUser()
         } catch (e) {

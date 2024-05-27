@@ -21,7 +21,7 @@ export default function Signup() {
 
     async function onSubmit(data) {
         setLoading(() => true)
-        console.log(data);
+        // console.log(data);
         const { username, email, password } = data
 
         try {

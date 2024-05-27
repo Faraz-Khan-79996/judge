@@ -19,13 +19,14 @@ const OutputDiff = ({ judgement, darkMode = true }) => {
   return (
     <div className={`p-4 ${darkMode ? 'tw-bg-gray-900 tw-text-white' : 'tw-bg-white tw-text-gray-900'} tw-shadow-lg tw-rounded-lg tw-max-w-4xl tw-mx-auto tw-my-8`}>
       <h2 className="tw-text-2xl tw-font-bold tw-mb-4">Output Comparison</h2>
-      <div className="tw-bg-gray-100 tw-p-4 tw-rounded-lg tw-mb-4 dark:tw-bg-gray-700">
-        <p className="tw-font-semibold">Test Case:</p>
-        <pre className="tw-whitespace-pre-wrap tw-font-mono">{testCase}</pre>
-      </div>
+
       <div className="tw-bg-gray-100 tw-p-4 tw-rounded-lg tw-mb-4 dark:tw-bg-gray-700">
         <p className="tw-font-semibold"><strong>Result:</strong> {result}</p>
         <p className="tw-font-semibold"><strong>Passed:</strong> {passed}/{total}</p>
+      </div>
+      <div className="tw-bg-gray-100 tw-p-4 tw-rounded-lg tw-mb-4 dark:tw-bg-gray-700">
+        <p className="tw-font-semibold">Failed Test Case:</p>
+        <pre className="tw-whitespace-pre-wrap tw-font-mono">{testCase}</pre>
       </div>
       <div className="tw-grid tw-grid-cols-1 md:tw-grid-cols-3 tw-gap-4">
         <div className="tw-bg-white tw-p-4 tw-rounded-lg tw-shadow-md dark:tw-bg-gray-800">

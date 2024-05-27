@@ -23,10 +23,10 @@ export default function Create({ params }) {
     async function onSubmit(problem) {
         try {
             setLoading(()=>true)
-            console.log(problem);
+            // console.log(problem);
 
             const { data } = await axios.post("/api/create", { problem })
-            console.log(data);
+            // console.log(data);
             navigate(`/problem/${data._id}`)
         } catch (error) {
             console.log(error);

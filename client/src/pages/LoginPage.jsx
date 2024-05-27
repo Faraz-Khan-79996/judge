@@ -23,7 +23,7 @@ export default function LoginPage() {
 
     async function onSubmit(data) {
         setLoading(()=>true)
-        console.log(data);
+        // console.log(data);
         const {username , password} = data
 
         try {
