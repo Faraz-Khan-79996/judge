@@ -6,15 +6,18 @@ import { ArrowLeft } from 'react-bootstrap-icons';
 import { Link, useParams } from "react-router-dom";
 import Solution_code from './ProblemPageComponenets/Solution_code'
 import CodeEditor from "./ProblemPageComponenets/CodeEditor";
-import { useEffect, useState } from "react";
+import { useEffect, useState , useContext } from "react";
 import Result from "./ProblemPageComponenets/Result";
 import FadeLoader from "react-spinners/FadeLoader";
 import axios from 'axios'
 import Alert from 'react-bootstrap/Alert';
+import {MoonStars , BrightnessHigh} from'react-bootstrap-icons'
+import UserContext from "../../context/UserContext";
 
 export default function ProblemPage() {
-    // console.log("re-render");
+    
     const {id} = useParams()
+    const { user , logout , toggleDarkMode , darkMode} = useContext(UserContext)
 
     const [key, setKey] = useState('Description');
     const [resultInfo, setResultInfo] = useState(null);
@@ -76,12 +79,13 @@ export default function ProblemPage() {
 
     return (
         <div className="pt-1">
+            <button onClick={toggleDarkMode} className='btn dark:tw-bg-slate-800 tw-bg-sky-950 tw-text-white tw-fixed tw-bottom-5 tw-right-5'>{darkMode ? <MoonStars size={25} /> : <BrightnessHigh size={25} /> }</button>
             <Link to="/"><Button style={{ position: 'absolute', top: "5px", left: "5px", zIndex: 1000,width : "60px" }} variant="secondary"><ArrowLeft /></Button></Link>
             <Tabs
                 variant='underline'
                 defaultActiveKey="Description"
                 id="justify-tab-example"
-                className="mb-3"
+                className=""
                 activeKey={key}
                 onSelect={(k) => setKey(k)}
                 justify
@@ -93,9 +97,8 @@ export default function ProblemPage() {
                     <CodeEditor setKey={setKey} setResultInfo={setResultInfo} {...problem} />
                 </Tab>
                 <Tab eventKey="Result" title="Result">
-                    <div className="container">
+                    <div className="">
                         <Result resultInfo={resultInfo} {...problem}/>
-
                     </div>
                 </Tab>
                 <Tab eventKey="Solution" title="Solution">

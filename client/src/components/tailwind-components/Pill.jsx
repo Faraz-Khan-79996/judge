@@ -26,7 +26,7 @@ export default function Pill({ mode, text }) {
 
   return (
     <>
-    <span className={`tw-text-sm tw-font-medium tw-me-2 tw-px-2.5 tw-py-0.5 tw-rounded ${getPillClasses()}`}>
+    <span className={`tw-text-sm tw-my-auto tw-font-medium tw-me-2 tw-px-2.5 tw-py-0.5 tw-rounded ${getPillClasses()}`}>
       {text}
     </span>
     </>

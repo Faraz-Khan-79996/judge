@@ -7,7 +7,7 @@ const OutputDiff = ({ judgement, darkMode = true }) => {
 
   if (!correctFormat) {
     return (
-      <div className={`p-4 ${darkMode ? 'tw-bg-gray-900 tw-text-white' : 'tw-bg-white tw-text-gray-900'} tw-shadow-lg tw-rounded-lg tw-max-w-4xl tw-mx-auto tw-my-8`}>
+      <div className={`p-4 ${darkMode ? 'tw-bg-gray-900 tw-text-white' : 'tw-bg-white tw-text-gray-900'} tw-shadow-lg tw-rounded-lg  tw-mx-auto tw-my-8`}>
         <h2 className="tw-text-2xl tw-font-bold tw-mb-4">Output Comparison</h2>
         <p className="tw-text-red-500 tw-font-semibold">{result}</p>
       </div>
@@ -17,7 +17,7 @@ const OutputDiff = ({ judgement, darkMode = true }) => {
   const diff = diffWords(userOutput , correctOutput);
 
   return (
-    <div className={`p-4 ${darkMode ? 'tw-bg-gray-900 tw-text-white' : 'tw-bg-white tw-text-gray-900'} tw-shadow-lg tw-rounded-lg tw-max-w-4xl tw-mx-auto tw-my-8`}>
+    <div className={`tw-p-8 ${darkMode ? 'tw-bg-gray-900 tw-text-white' : 'tw-bg-white tw-text-gray-900'} tw-shadow-lg tw-rounded-lg  tw-mx-auto tw-my-8`}>
       <h2 className="tw-text-2xl tw-font-bold tw-mb-4">Output Comparison</h2>
 
       <div className="tw-bg-gray-100 tw-p-4 tw-rounded-lg tw-mb-4 dark:tw-bg-gray-700">

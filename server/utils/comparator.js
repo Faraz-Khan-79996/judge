@@ -68,7 +68,7 @@ function judgeOutput(correct, incorrect , input) {
                 passed: i,
                 correctOutput   : correct[i],
                 userOutput: incorrect[i],
-                result : `Incorrect output at test case : ${i+1}`,
+                result : `Incorrect output at test case number ${i+1}`,
                 testCase : input[i],
                 total : correct.length,
 
