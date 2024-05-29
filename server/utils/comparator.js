@@ -56,6 +56,10 @@ function judgeOutput(correct, incorrect , input) {
             correctFormat : false,
             result : `Incorrect output length`,
             passed : 0,
+            correctOutput  : null,
+            userOutput: null,
+            testCase : null,
+            total : correct.length,
         }; // The first difference is at the end of the shorter array
     }
 

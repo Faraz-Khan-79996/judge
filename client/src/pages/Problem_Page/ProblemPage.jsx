@@ -3,7 +3,7 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Button from 'react-bootstrap/Button';
 import { ArrowLeft } from 'react-bootstrap-icons';
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Solution_code from './ProblemPageComponenets/Solution_code'
 import CodeEditor from "./ProblemPageComponenets/CodeEditor";
 import { useEffect, useState , useContext } from "react";
@@ -18,6 +18,7 @@ export default function ProblemPage() {
     
     const {id} = useParams()
     const { user , logout , toggleDarkMode , darkMode} = useContext(UserContext)
+    const navigate = useNavigate()
 
     const [key, setKey] = useState('Description');
     const [resultInfo, setResultInfo] = useState(null);
@@ -43,6 +44,7 @@ export default function ProblemPage() {
             console.log(err);
             setFailure(() => err)
             setLoading(() => false)
+            navigate('/error')
         })
     }, [])
 

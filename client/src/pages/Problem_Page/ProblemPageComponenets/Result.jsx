@@ -47,7 +47,7 @@ export default function Result({ resultInfo, submissionDoc = null }) {
           </h1>
           <div className="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-3 tw-gap-6 tw-mb-6">
             <div
-              className={`tw-flex tw-items-center tw-overflow-auto  tw-mb-6 tw-h-full tw-rounded-lg ${
+              className={`tw-flex tw-items-center tw-overflow-auto tw-pr-5  tw-mb-6 tw-h-full tw-rounded-lg ${
                 darkMode
                   ? "tw-bg-gray-800 tw-text-white"
                   : "tw-bg-white tw-text-gray-900"

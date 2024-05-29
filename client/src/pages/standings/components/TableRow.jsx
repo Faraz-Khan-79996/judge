@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Solution from "./Solution";
 import { formatDistanceToNow } from "date-fns";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function TableRow({
   _id,
@@ -17,6 +17,8 @@ export default function TableRow({
   createdAt,
 }) {
   const [modalShow, setModalShow] = useState(false);
+
+  const navigate = useNavigate()
 
   return (
     <>
@@ -58,7 +60,7 @@ export default function TableRow({
             {formatDistanceToNow(createdAt, { addSuffix: true })}
           </h6>
         </td>
-        <td>
+        <td onClick={()=>{navigate(`/submission/${_id}`)}} className="dark:hover:tw-bg-gray-700 tw-cursor-pointer hover:tw-bg-gray-200">
           <h6 className="tw-font-semibold">{_id}</h6>
         </td>
         <td>

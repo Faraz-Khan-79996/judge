@@ -162,11 +162,15 @@ router.post('/submit/:id' , isLoggedIn ,async(req , res)=>{
 
         }
         else{
-            submission.status = "Rejected"
-            submission.message = "Wrong Answer"
-            const submissionDoc = await submission.save()
 
             const judgement = judgeOutput(CorrectOutput, output ,input)
+
+            submission.status = "Rejected"
+            submission.message = "Wrong Answer"
+            submission.FailedInfo = judgement
+            const submissionDoc = await submission.save()
+
+            
             // console.log(judgement);
             // console.log(CorrectOutput.split('\n') , output.split('\n') , input.split('\n'));
 
@@ -184,6 +188,7 @@ router.post('/submit/:id' , isLoggedIn ,async(req , res)=>{
         submission.message = "Compilation Error"
         const submissionDoc = await submission.save()
         error.submissionDoc = submissionDoc
+
         res.status(error.statusCode ? error.statusCode : 500).json(error)
         await User.findByIdAndUpdate(req.user._id, { $push : { submissions : submissionDoc._id } })
         const problem = await Problem.findById(id);

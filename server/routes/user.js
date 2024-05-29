@@ -69,7 +69,10 @@ router.get('/user/:username', async (req, res) => {
     try {
         const { username } = req.params
         const user = await User.findOne({username : username}, { hash: 0, salt: 0 })
-            .populate('submissions')
+            .populate({
+                path: 'submissions',
+                options: { sort: { createdAt: -1 } }  // This sorts the populated submissions
+            })
             .populate('dislikedProblems')
             .populate('likedProblems')
             .populate('solved')

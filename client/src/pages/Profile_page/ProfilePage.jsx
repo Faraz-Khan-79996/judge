@@ -8,17 +8,21 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Pill from "../../components/tailwind-components/Pill";
 
 import Loader from "../../components/Loader";
 import HeatChart from "../../components/HeatChart";
+import NotFoundPage from "../errorPages/NotFoundPage";
+import { Link } from "react-router-dom";
+import { formatDistanceToNow } from "date-fns";
 
 const ProfilePage = () => {
   const [userProfileData, setUserProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
-  const [value, setValue] = React.useState("1");
+  const [value, setValue] = React.useState("4");
+  const navigate = useNavigate()
 
   // const id = "test"
   const { username } = useParams();
@@ -46,9 +50,10 @@ const ProfilePage = () => {
         setLoading(false);
         // console.log(userData)
       } catch (error) {
-        // console.log(error)
-        alert(error.message);
+        console.log(error)
+        // alert(error.message);
         setLoading(false);
+        navigate(`/error`)
       }
     }
 
@@ -198,7 +203,10 @@ const ProfilePage = () => {
               <SavedProblemsTable saved={userProfileData.saved} />
             </TabPanel>
             <TabPanel value="4">
+              <div className="">
+
               <SubmissionsTable submissions={userProfileData.submissions} />
+              </div>
             </TabPanel>
           </TabContext>
         </Box>
@@ -328,6 +336,9 @@ const SavedProblemsTable = ({ saved }) => {
 };
 
 const SubmissionsTable = ({ submissions }) => {
+
+  const navigate = useNavigate()
+
   return (
     <section className="tw-mb-10">
       <div className="tw-rounded-lg tw-bg-white tw-p-6 tw-shadow-lg dark:tw-bg-gray-800">
@@ -340,6 +351,7 @@ const SubmissionsTable = ({ submissions }) => {
                 <th className="tw-px-6 tw-py-3 tw-text-left">Problem</th>
                 <th className="tw-px-6 tw-py-3 tw-text-left">Status</th>
                 <th className="tw-px-6 tw-py-3 tw-text-left">Language</th>
+                <th className="tw-px-6 tw-py-3 tw-text-left">time</th>
                 {/* <th className="tw-px-6 tw-py-3 tw-text-left">code</th> */}
               </tr>
             </thead>
@@ -348,8 +360,9 @@ const SubmissionsTable = ({ submissions }) => {
                 ? submissions.length > 0
                   ? submissions.map((submission) => (
                       <tr
+                        onClick={()=>{ navigate(`/submission/${submission._id}`) }}
                         key={submission._id}
-                        className="tw-border-b dark:tw-border-gray-700"
+                        className="tw-border-b dark:tw-border-gray-700 tw-cursor-pointer hover:tw-bg-gray-100 dark:hover:tw-bg-gray-700"
                       >
                         <td className="tw-px-6 tw-py-4">{submission._id}</td>
                         <td className="tw-px-6 tw-py-4">
@@ -365,6 +378,9 @@ const SubmissionsTable = ({ submissions }) => {
                         </td>
                         <td className="tw-px-6 tw-py-4">
                           {submission.language}
+                        </td>
+                        <td className="tw-px-6 tw-py-4">
+                          {formatDistanceToNow(submission.createdAt, { addSuffix: true })}
                         </td>
                       </tr>
                     ))

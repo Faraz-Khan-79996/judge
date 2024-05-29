@@ -40,7 +40,7 @@ export default function StandingPage() {
                             <th>Message</th>
                             <th>Language</th>
                             <th>Submitted at</th>
-                            <th>Submission Id</th>
+                            <th>View Submission</th>
                             <th>Code</th>
                         </tr>
                     </thead>
