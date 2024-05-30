@@ -67,7 +67,7 @@ function compileCpp(filepath) {
   });
 }
 
-function executeCpp(jobId, input) {
+function executeCpp(jobId, input , timeout=10000) {
 
   console.log(jobId);
 
@@ -82,6 +82,12 @@ function executeCpp(jobId, input) {
     program.stdin.write(input);
     program.stdin.end();
 
+    // Set a timeout to terminate the process if it hangs
+    const timer = setTimeout(() => {
+      program.kill();
+      reject(new ExpressError(408, 'Process timed out\nCode ran for too long\nPossible that your program expects input but you didn\'t give any. ', 'execution failure'));
+    }, timeout);
+
     program.stdout.on('data', (data) => {
       output += data.toString();
     });
@@ -92,10 +98,12 @@ function executeCpp(jobId, input) {
 
     program.on('error', (err) => {
       // reject(err);
+      clearTimeout(timer)
       reject(new ExpressError(404 , err.message , "execution failure"))
     });
 
     program.on('close', (code) => {
+      clearTimeout(timer)
       if (code !== 0) {
         // reject(new Error(`Process exited with code ${code}. Error: ${error}`));
         reject(new ExpressError(400 , `Process exited with code ${code}. Error: ${error}` , "execution failure"))
