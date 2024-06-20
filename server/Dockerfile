@@ -1,6 +1,14 @@
 # Use the official Node.js image as a base image
 FROM node:16
 
+# Install necessary packages
+RUN apt-get update && \
+    apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common && \
+    apt-get update && \
+    curl -sSL https://get.docker.com/ | sh && \
+    apt-get install -y docker redis-server && \
+    rm -rf /var/lib/apt/lists/*
+
 # Install GCC, Python, and the latest OpenJDK
 RUN apt-get update && \
     apt-get install -y gcc python default-jdk
@@ -27,4 +35,5 @@ RUN npm install
 EXPOSE 3000
 
 # Start the Node.js server
-CMD node index.js
+# CMD node index.js
+CMD ["/bin/bash", "-c", "redis-server & node index.js"]
