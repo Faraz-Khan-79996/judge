@@ -5,11 +5,11 @@ import axios from "axios";
 import Spinner from "react-bootstrap/Spinner";
 import UserContext from "../../../context/UserContext";
 
-const CodeEditor = ({ setKey, setResultInfo, _id }) => {
+const CodeEditor = ({ setKey, setResultInfo, _id , input}) => {
   const [language, setLanguage] = useState("cpp");
   const [theme, setTheme] = useState("vs-dark");
   const [fontSize, setFontSize] = useState(14);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState(input);
   const [outputValue, setOutputValue] = useState("");
   const [code, setCode] = useState("");
   // const [submittedButton, setSubmittedButton] = useState(null);
@@ -79,25 +79,45 @@ const CodeEditor = ({ setKey, setResultInfo, _id }) => {
       //   console.log(data);
       const { data: res } = await axios.get(`/api/run/status?id=${jobId}`);
       //   console.log(res);
+      setStatusHistory((prev) => prev.concat(`queue\n`));
+        
       let count = 1;
-      const poll = setInterval(async () => {
-        const { data } = await axios.get(`/api/run/status?id=${jobId}`);
-        // console.log(data);
-        const status = data.status;
-        // setStatusHistory(prev => prev.concat(`\n${status}`))
+    //   const poll = setInterval(async () => {
+    //     const { data } = await axios.get(`/api/run/status?id=${jobId}`);
+    //     // console.log(data);
+    //     const status = data.status;
+    //     // setStatusHistory(prev => prev.concat(`\n${status}`))
 
+    //     if (status != "completed" || count-- == 1) {
+    //       setStatusHistory((prev) => prev.concat(`${status}\n`));
+    //     }
+    //     console.log(status);
+    //     if (status == "completed") {
+    //       setOutputValue(data.runResult.output);
+    //       setLoadingRun((prev) => false);
+    //       clearInterval(poll);
+    //       setjobResult((prev) => data);
+    //     //   console.log(data);
+    //     }
+    //   }, 3500);
+
+    count = 1
+    while(true){
+        const { data } = await axios.get(`/api/run/status?id=${jobId}`);
+        const status = data.status;
         if (status != "completed" || count-- == 1) {
-          setStatusHistory((prev) => prev.concat(`${status}\n`));
+            setStatusHistory((prev) => prev.concat(`${status}\n`));
         }
-        console.log(status);
         if (status == "completed") {
-          setOutputValue(data.runResult.output);
-          setLoadingRun((prev) => false);
-          clearInterval(poll);
-          setjobResult((prev) => data);
-        //   console.log(data);
+            setOutputValue(data.runResult.output);
+            setLoadingRun((prev) => false);
+            setjobResult((prev) => data);
+          //   console.log(data);
+          break;
         }
-      }, 300);
+        await new Promise(r => setTimeout(r, 2500));
+    }
+
     } catch (e) {
       if (e.response) {
         alert(e.response.data);
