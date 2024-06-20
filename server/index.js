@@ -9,6 +9,7 @@ const problemRouter = require('./routes/problem')
 const userRouter = require('./routes/user.js')
 const submissionRouter = require('./routes/submission.js')
 const siteRouter = require('./routes/site.js')
+const executionRouter = require('./routes/execution.js')
 
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
@@ -67,6 +68,7 @@ app.use('/api' , problemRouter)
 app.use('/api' , userRouter)
 app.use('/api' , submissionRouter)
 app.use('/api' , siteRouter)
+app.use('/api' , executionRouter)
 
 app.get('/api/test' , isLoggedIn , (req , res)=>{
   res.json("You are logged in")
