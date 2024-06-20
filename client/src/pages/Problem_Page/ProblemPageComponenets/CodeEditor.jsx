@@ -342,7 +342,7 @@ const CodeEditor = ({ setKey, setResultInfo, _id , input}) => {
                 {/* <p className="tw-whitespace-pre-wrap tw-mb-4 tw-overflow-auto tw-h-28"></p> */}
                 <p>Runtime : <span className="tw-text-green-500">{jobResult.runResult.executionTime} </span>ms</p>
                 <p>processCompletionTime : <span className="tw-text-green-500">{jobResult.runResult.processCompletionTime}</span> ms</p>
-                <p>pushed to queue at : <span className="tw-text-green-500">{jobResult.runResult.processStartTime} </span>ms</p>
+                <p>popped from queue at : <span className="tw-text-green-500">{jobResult.runResult.processStartTime} </span>ms</p>
                 <p>totalTime from queue insertion till end :<span className="tw-text-green-500"> {jobResult.runResult.totalTime} </span>ms</p>
               </div>
             </div>
