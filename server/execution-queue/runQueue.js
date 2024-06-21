@@ -11,7 +11,7 @@ const {compileJava , executeJava} = require('../utils/javaExecutor');
 
 
 const jobQueue = new Queue("job-runner-queue");
-const NUM_WORKERS = 5;
+const NUM_WORKERS = 2;
 
 jobQueue.process(NUM_WORKERS, async ({ data }) => {
   const id = data.id;

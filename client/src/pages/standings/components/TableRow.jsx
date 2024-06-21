@@ -15,6 +15,7 @@ export default function TableRow({
   status,
   message,
   createdAt,
+  runtime
 }) {
   const [modalShow, setModalShow] = useState(false);
 
@@ -63,6 +64,7 @@ export default function TableRow({
         <td onClick={()=>{navigate(`/submission/${_id}`)}} className="dark:hover:tw-bg-gray-700 tw-cursor-pointer hover:tw-bg-gray-200">
           <h6 className="tw-font-semibold">{_id}</h6>
         </td>
+        <td className="tw-text-center"><span className="tw-text-green-500 tw-font-medium">{runtime ? runtime : "-"}</span></td>
         <td>
           <button
             onClick={() => setModalShow(true)}

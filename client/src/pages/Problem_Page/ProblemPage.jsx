@@ -100,7 +100,7 @@ export default function ProblemPage() {
                 </Tab>
                 <Tab eventKey="Result" title="Result">
                     <div className="">
-                        <Result resultInfo={resultInfo} {...problem}/>
+                        <Result submissionDoc={resultInfo} {...problem}/>
                     </div>
                 </Tab>
                 <Tab eventKey="Solution" title="Solution">

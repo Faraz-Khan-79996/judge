@@ -220,7 +220,7 @@ const LikedProblemsTable = ({ likedProblems }) => {
     <section className="tw-mb-10">
       <div className="tw-rounded-lg tw-bg-white tw-p-6 tw-shadow-lg dark:tw-bg-gray-800">
         <h2 className="tw-mb-6 tw-text-2xl tw-font-semibold">Liked Problems</h2>
-        <div className="tw-overflow-x-auto">
+        <div className="tw-h-[600px] tw-overflow-y-auto tw-overflow-x-auto">
           <table className="tw-min-w-full tw-rounded-lg tw-bg-white tw-shadow-md dark:tw-bg-gray-800">
             <thead>
               <tr className="tw-bg-gray-200 tw-text-gray-700 dark:tw-bg-gray-700 dark:tw-text-gray-300">
@@ -261,7 +261,7 @@ const DislikedProblemsTable = ({ dislikedProblems }) => {
         <h2 className="tw-mb-6 tw-text-2xl tw-font-semibold">
           Disliked Problems
         </h2>
-        <div className="tw-overflow-x-auto">
+        <div className="tw-h-[600px] tw-overflow-y-auto tw-overflow-x-auto">
           <table className="tw-min-w-full tw-rounded-lg tw-bg-white tw-shadow-md dark:tw-bg-gray-800">
             <thead>
               <tr className="tw-bg-gray-200 tw-text-gray-700 dark:tw-bg-gray-700 dark:tw-text-gray-300">
@@ -300,7 +300,7 @@ const SavedProblemsTable = ({ saved }) => {
     <section className="tw-mb-10">
       <div className="tw-rounded-lg tw-bg-white tw-p-6 tw-shadow-lg dark:tw-bg-gray-800">
         <h2 className="tw-mb-6 tw-text-2xl tw-font-semibold">Saved Problems</h2>
-        <div className="tw-overflow-x-auto">
+        <div className="tw-h-[600px] tw-overflow-y-auto tw-overflow-x-auto">
           <table className="tw-min-w-full tw-rounded-lg tw-bg-white tw-shadow-md dark:tw-bg-gray-800">
             <thead>
               <tr className="tw-bg-gray-200 tw-text-gray-700 dark:tw-bg-gray-700 dark:tw-text-gray-300">
@@ -343,7 +343,7 @@ const SubmissionsTable = ({ submissions }) => {
     <section className="tw-mb-10">
       <div className="tw-rounded-lg tw-bg-white tw-p-6 tw-shadow-lg dark:tw-bg-gray-800">
         <h2 className="tw-mb-6 tw-text-2xl tw-font-semibold">Submissions</h2>
-        <div className="tw-overflow-x-auto">
+        <div className="tw-h-[600px] tw-overflow-y-auto tw-overflow-x-auto">
           <table className="tw-min-w-full tw-rounded-lg tw-bg-white tw-shadow-md dark:tw-bg-gray-800">
             <thead>
               <tr className="tw-bg-gray-200 tw-text-gray-700 dark:tw-bg-gray-700 dark:tw-text-gray-300">

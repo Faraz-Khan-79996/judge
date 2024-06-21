@@ -41,7 +41,7 @@ export default function SubmissionPage() {
 
     return (
         <div>
-            <Result resultInfo={{submissionDoc : submissionInfo , judgement : submissionInfo.FailedInfo}} />
+            <Result submissionDoc={submissionInfo } />
         </div>
     );
 }

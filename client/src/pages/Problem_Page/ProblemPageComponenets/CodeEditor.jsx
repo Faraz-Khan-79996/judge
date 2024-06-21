@@ -4,6 +4,7 @@ import Editor from "@monaco-editor/react";
 import axios from "axios";
 import Spinner from "react-bootstrap/Spinner";
 import UserContext from "../../../context/UserContext";
+import { json } from "react-router-dom";
 
 const CodeEditor = ({ setKey, setResultInfo, _id , input}) => {
   const [language, setLanguage] = useState("cpp");
@@ -115,7 +116,7 @@ const CodeEditor = ({ setKey, setResultInfo, _id , input}) => {
           //   console.log(data);
           break;
         }
-        await new Promise(r => setTimeout(r, 2500));
+        await new Promise(r => setTimeout(r, 3300));
     }
 
     } catch (e) {
@@ -136,33 +137,47 @@ const CodeEditor = ({ setKey, setResultInfo, _id , input}) => {
 
   async function submitCode(e) {
     e.preventDefault();
+    setStatusHistory((prev) => "");
     setLoadingSubmit((prev) => true);
+    setjobResult(prev=> null)
     const payload = {
       code,
       language,
     };
 
     try {
-      // const { data } = await axios.post('/api/submit', { payload });
+      
       const { data } = await axios.post(`/api/submit/${_id}`, { payload });
       // console.log(data);
       setResultInfo(data);
-      updateUser();
+      const jobId = data.jobDoc._id;
+      setStatusHistory((prev) => prev.concat(`queue\n`));
+
+      let count = 1
+      while(true){
+          const { data } = await axios.get(`/api/submit/status?id=${jobId}`);
+          
+          let status = data.jobDoc.status;
+          // console.log(status);
+          // status=""
+          if (status != "completed" || count-- == 1) {
+              setStatusHistory((prev) => prev.concat(`${status}\n`));
+          }
+          if (status == "completed") {
+            // setLoadingSubmit((prev) => false);
+            //   console.log(data);
+            setResultInfo(data.submissionDoc)
+            // console.log(data);
+            break;
+          }
+          await new Promise(r => setTimeout(r, 3300));
+      }
+
+      
     } catch (e) {
       if (e.response) {
-        // The request was made and the server responded with a status code
-
-        const customError = e.response.data;
-        // console.log(e.response.data);
-        if (customError.type == "compilation error") {
-          // setResultInfo({ msg: customError.message })
-          setResultInfo(customError);
-        } else if (customError.type == "execution failure") {
-          setResultInfo(customError);
-        }
+        alert(JSON.stringify(e.response))
       } else if (e.request) {
-        // The request was made but no response was received
-        // console.log(error.request);
         alert("No response received");
       } else {
         // Something happened in setting up the request that triggered an Error
@@ -170,6 +185,7 @@ const CodeEditor = ({ setKey, setResultInfo, _id , input}) => {
         console.log("Error", e.message);
       }
     }
+    updateUser();
     setLoadingSubmit((prev) => false);
     setKey("Result");
   }
@@ -236,7 +252,7 @@ const CodeEditor = ({ setKey, setResultInfo, _id , input}) => {
               height="60vh"
               // defaultLanguage={language}
               language={language}
-              defaultValue={"//Write your code"}
+              defaultValue={""}
               value={code}
               onChange={(value) => setCode(value)}
               theme={theme}

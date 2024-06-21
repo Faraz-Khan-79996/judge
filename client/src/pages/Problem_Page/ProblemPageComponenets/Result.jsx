@@ -1,7 +1,7 @@
 import Alert from "react-bootstrap/Alert";
 import "./result.css";
 import OutputDiff from "./subComponents/OutputDiff";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import UserContext from "../../../context/UserContext";
 
 import { ToastContainer, toast, Bounce } from "react-toastify";
@@ -9,9 +9,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { coy, a11yDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import Pill from "../../../components/tailwind-components/Pill";
+import { useEffect } from "react";
+import axios from "axios";
 
-export default function Result({ resultInfo, submissionDoc = null }) {
-  if (resultInfo != null) {
+export default function Result({submissionDoc = null }) {
+
+  if (submissionDoc != null) {
     const { darkMode } = useContext(UserContext);
 
     const {
@@ -24,8 +27,12 @@ export default function Result({ resultInfo, submissionDoc = null }) {
       language,
       status,
       message,
+      errorMessage,
       code,
-    } = resultInfo.submissionDoc;
+      FailedInfo,
+      runtime
+    } = submissionDoc;
+
 
     return (
       <div
@@ -137,20 +144,23 @@ export default function Result({ resultInfo, submissionDoc = null }) {
               <p className="tw-mb-2">
                 <strong>Message:</strong> {message}
               </p>
+              <p className="tw-mb-2">
+                <strong>Runtime:</strong> <span className="tw-text-green-500 tw-font-medium">{runtime?runtime : "NO RECORD"}</span> ms
+              </p>
             </div>
           </div>
 
-          {resultInfo.judgement ? (
-            <OutputDiff judgement={resultInfo.judgement} darkMode={darkMode} />
+          {FailedInfo ? (
+            <OutputDiff judgement={FailedInfo} darkMode={darkMode} />
           ) : null}
 
           <div>
-            {"message" in resultInfo ? (
+            {errorMessage ? (
               <Alert variant="danger">
-                <Alert.Heading>{resultInfo.type}</Alert.Heading>
+                <Alert.Heading>{message}</Alert.Heading>
                 <p>Fix your code bruh....</p>
                 <hr />
-                <p className="tw-mb-0">{resultInfo.message}</p>
+                <p className="tw-mb-0">{errorMessage}</p>
               </Alert>
             ) : null}
           </div>

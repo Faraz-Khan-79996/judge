@@ -41,6 +41,7 @@ export default function StandingPage() {
                             <th>Language</th>
                             <th>Submitted at</th>
                             <th>View Submission</th>
+                            <th>Runtime(ms)</th>
                             <th>Code</th>
                         </tr>
                     </thead>

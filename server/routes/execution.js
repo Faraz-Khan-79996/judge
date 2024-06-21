@@ -15,6 +15,7 @@ const User = require('../models/user')
 const { isLoggedIn } = require('../middlewares/userMiddleware');
 const {judgeOutput} = require('../utils/comparator')
 const {addToRunQueue} = require('../execution-queue/runQueue')
+const {addToSubmissionQueue} = require('../execution-queue/submissionQueue')
 const Job = require('../models/job')
 
 // router.post('/run' , async(req , res)=>{
@@ -116,7 +117,7 @@ router.post('/submit' , async(req , res)=>{
             const filename = await compileJava(filePath)
             output = await executeJava(filename , input)
         }
-        console.log("completed");
+        // console.log("completed");
         if(output.trim() == CorrectOutput.trim()){
             res.json({verdict : true , output , CorrectOutput})
         }
@@ -129,96 +130,146 @@ router.post('/submit' , async(req , res)=>{
     }
 })
 
-router.post('/submit/:id' , isLoggedIn ,async(req , res)=>{
-    const {code , language} = req.body.payload;
-    const {id} = req.params;
+// router.post('/submit/:id' , isLoggedIn ,async(req , res)=>{
+//     const {code , language} = req.body.payload;
+//     const {id} = req.params;
 
-    const submission = new Submission({
-        user : req.user.username,
-        language,
-        code,
-        problemId : id,
-        userId : req.user._id,
-        email : req.user.email,
-    })
-    try {
+//     const submission = new Submission({
+//         user : req.user.username,
+//         language,
+//         code,
+//         problemId : id,
+//         userId : req.user._id,
+//         email : req.user.email,
+//     })
+//     try {
         
+//         console.log("req at /api/submit/:id");  
+
+        
+//         const filePath = await generateFile(code , extension[language])
+
+//         let output;
+//         const problemDoc = await Problem.findById(id)
+//         const CorrectOutput = problemDoc.output
+//         const input = problemDoc.input
+
+//         submission.problemName = problemDoc.name;
+
+//         if(language == "cpp" || language == "c"){
+//             const jobId = await compileCpp(filePath)
+//             output = await executeCpp(jobId , input)
+//         }
+//         else if(language == "python"){
+//             output = await executePython(filePath , input)
+//         }
+//         else if(language == "java"){
+//             const filename = await compileJava(filePath)
+//             output = await executeJava(filename , input)
+//         }
+//         console.log("completed");
+//         output = output.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+//         output = output.trim()
+
+
+//         if(output.trim() == CorrectOutput.trim()){
+//             submission.status = "Accepted"
+//             submission.message = "Correct Output"
+//             const submissionDoc = await submission.save()
+//             res.json({verdict : true , output , CorrectOutput , submissionDoc})
+//             await User.findByIdAndUpdate(req.user._id, { $addToSet: { solved: id }})
+//             await User.findByIdAndUpdate(req.user._id, { $push : { submissions : submissionDoc._id } })
+//             problemDoc.acceptedSubmissions++;
+//             problemDoc.save();
+
+
+
+//         }
+//         else{
+
+//             const judgement = judgeOutput(CorrectOutput, output ,input)
+
+//             submission.status = "Rejected"
+//             submission.message = "Wrong Answer"
+//             submission.FailedInfo = judgement
+//             const submissionDoc = await submission.save()
+
+            
+//             // console.log(judgement);
+//             // console.log(CorrectOutput.split('\n') , output.split('\n') , input.split('\n'));
+
+//             res.json({verdict : false , output , CorrectOutput , submissionDoc , judgement})
+            
+//             await User.findByIdAndUpdate(req.user._id, { $push : { submissions : submissionDoc._id } })
+//             problemDoc.rejectedSubmissions++;
+//             problemDoc.save();
+
+//         }
+//     } catch (error) {
+//         console.log(error);
+        
+//         submission.status = "Rejected"
+//         submission.message = "Compilation Error"
+//         const submissionDoc = await submission.save()
+//         error.submissionDoc = submissionDoc
+
+//         res.status(error.statusCode ? error.statusCode : 500).json(error)
+//         await User.findByIdAndUpdate(req.user._id, { $push : { submissions : submissionDoc._id } })
+//         const problem = await Problem.findById(id);
+//         problem.rejectedSubmissions++;
+//         problem.save()
+
+//     }
+// })
+router.post('/submit/:id' , isLoggedIn ,async(req , res)=>{
+
+    try {
         console.log("req at /api/submit/:id");  
 
-        
+        const {code , language} = req.body.payload;
+        const {id} = req.params;
         const filePath = await generateFile(code , extension[language])
 
-        let output;
-        const problemDoc = await Problem.findById(id)
-        const CorrectOutput = problemDoc.output
-        const input = problemDoc.input
+        let jobDoc = new Job({
+            status : "queue",
+            problemId : id,
+            userId : req.user._id,
+            filePath : filePath,
+            inputValue : null,
+            language: language,
+            code: code,  
+            runResult : null,
 
-        submission.problemName = problemDoc.name;
+        })
+        await jobDoc.save();
+        addToSubmissionQueue(jobDoc._id)
+        res.status(201).json({msg : "added to queue" , jobDoc})  
+    } catch (error) {
 
-        if(language == "cpp" || language == "c"){
-            const jobId = await compileCpp(filePath)
-            output = await executeCpp(jobId , input)
-        }
-        else if(language == "python"){
-            output = await executePython(filePath , input)
-        }
-        else if(language == "java"){
-            const filename = await compileJava(filePath)
-            output = await executeJava(filename , input)
-        }
-        console.log("completed");
-        output = output.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
-        output = output.trim()
+        res.status(500).json(error)
+    }
+})
 
+router.get('/submit/status' , async(req , res)=>{
 
-        if(output.trim() == CorrectOutput.trim()){
-            submission.status = "Accepted"
-            submission.message = "Correct Output"
-            const submissionDoc = await submission.save()
-            res.json({verdict : true , output , CorrectOutput , submissionDoc})
-            await User.findByIdAndUpdate(req.user._id, { $addToSet: { solved: id }})
-            await User.findByIdAndUpdate(req.user._id, { $push : { submissions : submissionDoc._id } })
-            problemDoc.acceptedSubmissions++;
-            problemDoc.save();
+    try {
+        const {id} = req.query;
+        // console.log('/submit/status');
 
-
+        const jobDoc = await Job.findById(id);
+    
+        if(jobDoc.status == "completed"){
+            const submissionDoc = await Submission.findById(jobDoc.submissionId)
+            res.json({submissionDoc , jobDoc})            
 
         }
         else{
-
-            const judgement = judgeOutput(CorrectOutput, output ,input)
-
-            submission.status = "Rejected"
-            submission.message = "Wrong Answer"
-            submission.FailedInfo = judgement
-            const submissionDoc = await submission.save()
-
-            
-            // console.log(judgement);
-            // console.log(CorrectOutput.split('\n') , output.split('\n') , input.split('\n'));
-
-            res.json({verdict : false , output , CorrectOutput , submissionDoc , judgement})
-            
-            await User.findByIdAndUpdate(req.user._id, { $push : { submissions : submissionDoc._id } })
-            problemDoc.rejectedSubmissions++;
-            problemDoc.save();
-
-        }
+            res.json({jobDoc});
+        }        
     } catch (error) {
-        console.log(error);
-        
-        submission.status = "Rejected"
-        submission.message = "Compilation Error"
-        const submissionDoc = await submission.save()
-        error.submissionDoc = submissionDoc
-
-        res.status(error.statusCode ? error.statusCode : 500).json(error)
-        await User.findByIdAndUpdate(req.user._id, { $push : { submissions : submissionDoc._id } })
-        const problem = await Problem.findById(id);
-        problem.rejectedSubmissions++;
-        problem.save()
-
+        res.status(500).json(error);
     }
+    
 })
 
 module.exports = router 

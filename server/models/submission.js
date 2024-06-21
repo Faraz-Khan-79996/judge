@@ -21,8 +21,11 @@ const submissionSchema = new Schema({
         type: String,
         enum: ["Correct Output", "Wrong Answer", "Compilation Error"]
     },
+    
+    errorMessage : String,
     language: String,
     code: String,
+    runtime : Number,
 
     FailedInfo: {
         correctFormat: Boolean,
