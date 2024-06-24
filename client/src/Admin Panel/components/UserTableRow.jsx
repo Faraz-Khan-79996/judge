@@ -2,14 +2,14 @@ import {PersonCircle} from 'react-bootstrap-icons'
 import { Link } from 'react-router-dom'
 
 export default function UserTableRow({username , _id , email , isAdmin , solved , user='',
-    problemName='', problemId='', userId='', language='', code='', status='', message='', createdAt=''}) {
+    problemName='', problemId='', userId='', language='', code='', status='', message='', createdAt='' , image}) {
     return (
             <>
                 <tr>
                     <td>
                         <div className="d-flex align-items-center">
                             <img
-                                src="https://avatars.githubusercontent.com/u/149095180?v=4"
+                                src={image.url}
                                 alt=""
                                 style={{ width: '45px', height: '45px' }}
                                 className="rounded-circle"

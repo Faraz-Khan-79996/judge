@@ -12,7 +12,7 @@ const {executePython} = require('../utils/pythonExecutor')
 const {compileJava , executeJava} = require('../utils/javaExecutor');
 const Submission = require('../models/submission');
 const User = require('../models/user')
-const { isLoggedIn } = require('../middlewares/userMiddleware');
+const { isLoggedIn , isAdmin } = require('../middlewares/userMiddleware');
 const {judgeOutput} = require('../utils/comparator')
 const {addToRunQueue} = require('../execution-queue/runQueue')
 const Job = require('../models/job')
@@ -119,7 +119,7 @@ const Job = require('../models/job')
 
 router.get('/problems' , async(req , res)=>{
     try {
-        const problems = await Problem.find().sort({createdAt:-1})
+        const problems = await Problem.find().sort({createdAt:-1}).populate('authorId' , 'image')
         res.json(problems)
     } catch (error) {
         res.status(500).json(error)
@@ -129,7 +129,7 @@ router.get('/problems' , async(req , res)=>{
 router.get('/problem/:id' , async(req , res)=>{
     try {
         const {id} = req.params;
-        const problems = await Problem.findById(id)
+        const problems = await Problem.findById(id).populate('authorId' , 'image')
         res.json(problems)
     } catch (error) {
         res.status(500).json(error)
@@ -228,7 +228,7 @@ router.get('/problem/:id' , async(req , res)=>{
 //     }
 // })
 
-router.post('/create' , async(req , res)=>{
+router.post('/create' , isLoggedIn, isAdmin ,async(req , res)=>{
     try {
         
         // res.status(503).json({message : "Owner Of this site has closed this Route."})
@@ -236,7 +236,9 @@ router.post('/create' , async(req , res)=>{
         console.log("Create request received!");
         const {problem} = req.body;
         problem.author = req.user.username;
+        problem.authorId = req.user._id;
         problem.output = problem.output.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+        problem.output = output.trim()
         // console.log(req.body);
 
         const problemDoc = await Problem.create(problem)
@@ -247,7 +249,7 @@ router.post('/create' , async(req , res)=>{
     }
 })
 
-router.put('/problem/:id' , async(req , res)=>{
+router.put('/problem/:id' , isLoggedIn, isAdmin , async(req , res)=>{
     try {
         const {id} = req.params
         const {problem} = req.body;
@@ -260,7 +262,7 @@ router.put('/problem/:id' , async(req , res)=>{
     }
 })
 
-router.put('/problem/:id/like' , async(req  , res )=>{
+router.put('/problem/:id/like' , isLoggedIn,async(req  , res )=>{
     const userId = req.user._id
     const {id} = req.params;
 
@@ -276,7 +278,7 @@ router.put('/problem/:id/like' , async(req  , res )=>{
     await User.findByIdAndUpdate(userId, { $addToSet: { likedProblems: id } })
 
 })
-router.put('/problem/:id/dislike' , async(req  , res )=>{
+router.put('/problem/:id/dislike' ,isLoggedIn, async(req  , res )=>{
     const userId = req.user._id
     const {id} = req.params;
     // const new_doc = await Problem.findByIdAndUpdate(id , {$inc :{dislikes : 1}} , {new : true})
@@ -290,7 +292,7 @@ router.put('/problem/:id/dislike' , async(req  , res )=>{
     await User.findByIdAndUpdate(userId, { $pull: { likedProblems: id } })    
 })
 
-router.put('/problem/:id/remove' , async (req , res)=>{
+router.put('/problem/:id/remove' ,isLoggedIn, async (req , res)=>{
 
     const {remove} = req.query;
     const userId = req.user._id

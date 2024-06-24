@@ -84,12 +84,37 @@ const UserContextProvider = ({ children }) => {
         }
     }
 
+    const editUser = async(data)=>{
+        // console.log(data);
+        try {
+            //data has 'image' which is file
+            // console.log(data.image);
+
+            const payload = new FormData()
+            payload.append('file' , data.image)
+
+            const {data : response} = await axios.post('/api/user/update',payload  , 
+            {
+                withCredentials: true,
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            // console.log("This happened");
+            await updateUser()
+            return response
+        } catch (error) {
+            console.log(error);
+            alert(error.message)
+        }
+    }
+
     if (loading) {
         return <Loader />
     }
     else {
         return (
-            <UserContext.Provider value={{ user, setUser, login, logout, signup, updateUser ,darkMode , toggleDarkMode , showToast , setShowtoast }}>
+            <UserContext.Provider value={{ user, setUser, login,editUser, logout, signup, updateUser ,darkMode , toggleDarkMode , showToast , setShowtoast }}>
                 {children}
             </UserContext.Provider>
         );

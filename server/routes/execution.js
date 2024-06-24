@@ -7,7 +7,7 @@ const app = express();
 require('dotenv').config()
 const Problem = require('../models/problem')
 
-const {generateFile , extension , executeCpp , compileCpp} = require('../utils/methods');
+const {generateFile , extension, OutputExtension , executeCpp , compileCpp} = require('../utils/methods');
 const {executePython} = require('../utils/pythonExecutor')
 const {compileJava , executeJava} = require('../utils/javaExecutor');
 const Submission = require('../models/submission');
@@ -82,13 +82,45 @@ router.post('/run' , async(req , res)=>{
 })
 
 router.get('/run/status' , async(req , res)=>{
-    const {id} = req.query;
+    try {
+        const {id} = req.query;
 
-    const jobDoc = await Job.findById(id);
-    // console.log("status req");
-    // console.log(id);
-    res.json(jobDoc);
+        const jobDoc = await Job.findById(id);
+        // console.log("status req");
+        // console.log(id);
 
+        res.json(jobDoc);
+
+        // try {
+        //     let Fullfilename = path.basename(jobDoc.filePath)
+        //     let filename = Fullfilename.split('.')[0]
+        //     let outputFile = filename + "." + OutputExtension[jobDoc.language]
+            
+        //     const ouptuFilePath = path.join(__dirname , '..' , "outputs" , outputFile )
+        //     console.log(ouptuFilePath);
+
+        //     if(jobDoc.status == "completed"){
+        //         console.log(jobDoc.filePath);
+        //         fs.unlink(jobDoc.filePath , (err)=>{
+        //             if(err) throw err
+        //             // console.log("file deleted code");
+        //         });
+
+        //         if(jobDoc.language != "py"){
+        //             fs.unlink(ouptuFilePath , (err)=>{
+        //                 if(err) throw err
+        //                 // console.log("file deleted output");
+        //             });
+        //         }
+
+        //     }
+        // } catch (error) {
+        //     console.log(error.message);
+        // }
+    
+    } catch (error) {
+        res.status(500).json(error);
+    }
 })
 
 router.post('/submit' , async(req , res)=>{
@@ -262,6 +294,8 @@ router.get('/submit/status' , async(req , res)=>{
             const submissionDoc = await Submission.findById(jobDoc.submissionId)
             res.json({submissionDoc , jobDoc})            
 
+            // fs.unlink(jobDoc.filePath);
+            // console.log(jobDoc.filePath);
         }
         else{
             res.json({jobDoc});

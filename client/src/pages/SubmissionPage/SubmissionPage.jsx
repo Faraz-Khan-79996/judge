@@ -18,7 +18,7 @@ export default function SubmissionPage() {
         async function fetchInfo() {
             try {
                 const {data} = await axios.get(`/api/submission/${id}` , {withCredentials : true})
-                console.log(data);
+                // console.log(data);
                 setSubmissionInfo(prev => data)
                              
             } catch (error) {

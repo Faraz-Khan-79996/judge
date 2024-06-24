@@ -20,7 +20,8 @@ async function updateProblem() {
             // dislikes : [],
             // likes : [],
             // acceptanceRate : 100,
-            author : "Faraz Khan",
+            // author : "Faraz Khan",
+            authorId : "661c30e427b00f556e4e1362"
         }
     })
 
@@ -33,7 +34,11 @@ async function updateUser() {
             // likedProblems: [],
             // dislikedProblems: [],
             // submissions : [],
-            saved : [],
+            // saved : [],
+            // image :{
+            //     url : "https://www.hotelbooqi.com/wp-content/uploads/2021/12/128-1280406_view-user-icon-png-user-circle-icon-png.png",
+            //     public_id : null,
+            // }
         }
     })
 
@@ -143,7 +148,7 @@ async function addSubmissionsToUser() {
 }
 
 //set will reset the given values
-// updateProblem()
+updateProblem()
 // updateUser()
 // updateProblemSubmission()
 // updateTimeStamps()

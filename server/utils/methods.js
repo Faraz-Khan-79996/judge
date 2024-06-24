@@ -14,6 +14,12 @@ const extension = {
   "c": "cpp",
   "java": "java",
 }
+const OutputExtension = {
+  "cpp": "out",
+  "python": "py",
+  "c": "out",
+  "java": "class",
+}
 
 //make directory if not there
 if (!fs.existsSync(dirCodes)) {
@@ -117,6 +123,7 @@ function executeCpp(jobId, input , timeout=10000) {
 module.exports = {
   generateFile,
   extension,
+  OutputExtension,
   compileCpp,
   executeCpp,
 };

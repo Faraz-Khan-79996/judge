@@ -7,7 +7,7 @@ import Badge from 'react-bootstrap/Badge';
 import Pill from './tailwind-components/Pill';
 import {Check2Circle} from 'react-bootstrap-icons'
 
-function Problem_card({ _id , name , intro , difficulty , createdAt , author}) {
+function Problem_card({ _id , name , intro , difficulty , createdAt , author , authorId}) {
   
   const {user} = useContext(UserContext)
   const [isPresent , setIsPresent] = useState(false)
@@ -66,7 +66,7 @@ function Problem_card({ _id , name , intro , difficulty , createdAt , author}) {
          </Link>)}
       <div className='tw-self-end tw-justify-self-end'>
         <div className="tw-flex tw-items-center">
-          <img className="tw-mx-2  tw-h-10 tw-w-10 tw-rounded-full tw-object-cover sm:tw-block" src="https://avatars.githubusercontent.com/u/149095180?v=4" alt="avatar" />
+          <img className="tw-mx-2  tw-h-10 tw-w-10 tw-rounded-full tw-object-cover sm:tw-block" src={authorId.image.url} alt="avatar" />
           <h1 className="tw-font-bold tw-text-gray-700 dark:tw-text-gray-400">{author}</h1>
         </div>
       </div>

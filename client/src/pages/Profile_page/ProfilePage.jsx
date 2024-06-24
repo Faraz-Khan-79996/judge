@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 
 import Button from "@mui/material/Button";
@@ -17,12 +17,17 @@ import NotFoundPage from "../errorPages/NotFoundPage";
 import { Link } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 
+import UserContext from "../../context/UserContext";
+import ProfileImage from "./components/ProfileImage";
+
+
 const ProfilePage = () => {
   const [userProfileData, setUserProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
   const [value, setValue] = React.useState("4");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { user} = useContext(UserContext)
 
   // const id = "test"
   const { username } = useParams();
@@ -30,6 +35,7 @@ const ProfilePage = () => {
   useEffect(() => {
     async function doStuff() {
       try {
+        setLoading(prev=>true);
         const { data: userData } = await axios.get(`/api/user/${username}`);
 
         const accepted = userData.submissions.filter(
@@ -47,18 +53,22 @@ const ProfilePage = () => {
         ).toFixed(2);
 
         setUserProfileData((prev) => userData);
-        setLoading(false);
+        setLoading(prev=>false);
         // console.log(userData)
       } catch (error) {
-        console.log(error)
+        console.log(error);
         // alert(error.message);
         setLoading(false);
-        navigate(`/error`)
+        navigate(`/error`);
       }
+      finally{
+      }
+      // console.log("re-render");
     }
-
+    
     doStuff();
-  }, []);
+  }, [username ]);
+  // console.log("re-render out");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -91,11 +101,9 @@ const ProfilePage = () => {
         <section className="tw-mb-10 tw-rounded-lg tw-bg-white tw-p-6 tw-shadow-lg dark:tw-bg-gray-800">
           <div className="tw-flex tw-flex-col tw-items-center lg:tw-flex-row">
             <div className="tw-mb-6 tw-flex tw-flex-col tw-items-center lg:tw-mb-0 lg:tw-w-1/3 lg:tw-items-start">
-              <img
-                className="tw-mb-4 tw-h-32 tw-w-32 tw-rounded-full"
-                src="https://avatars.githubusercontent.com/u/149095180?v=4"
-                alt="Profile"
-              />
+            
+            <ProfileImage userProfileData={userProfileData} setUserProfileData={setUserProfileData} />
+
               <h2 className="tw-mb-2 tw-text-2xl tw-font-semibold">
                 {userProfileData.username}
               </h2>
@@ -204,8 +212,7 @@ const ProfilePage = () => {
             </TabPanel>
             <TabPanel value="4">
               <div className="">
-
-              <SubmissionsTable submissions={userProfileData.submissions} />
+                <SubmissionsTable submissions={userProfileData.submissions} />
               </div>
             </TabPanel>
           </TabContext>
@@ -336,8 +343,7 @@ const SavedProblemsTable = ({ saved }) => {
 };
 
 const SubmissionsTable = ({ submissions }) => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <section className="tw-mb-10">
@@ -360,7 +366,9 @@ const SubmissionsTable = ({ submissions }) => {
                 ? submissions.length > 0
                   ? submissions.map((submission) => (
                       <tr
-                        onClick={()=>{ navigate(`/submission/${submission._id}`) }}
+                        onClick={() => {
+                          navigate(`/submission/${submission._id}`);
+                        }}
                         key={submission._id}
                         className="tw-border-b dark:tw-border-gray-700 tw-cursor-pointer hover:tw-bg-gray-100 dark:hover:tw-bg-gray-700"
                       >
@@ -380,7 +388,9 @@ const SubmissionsTable = ({ submissions }) => {
                           {submission.language}
                         </td>
                         <td className="tw-px-6 tw-py-4">
-                          {formatDistanceToNow(submission.createdAt, { addSuffix: true })}
+                          {formatDistanceToNow(submission.createdAt, {
+                            addSuffix: true,
+                          })}
                         </td>
                       </tr>
                     ))

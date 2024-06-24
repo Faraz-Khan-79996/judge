@@ -14,6 +14,13 @@ const userSchema = new Schema({
         }],
         unique: true
     },
+    image : {
+        url:{
+            type : String,
+            default : "https://www.hotelbooqi.com/wp-content/uploads/2021/12/128-1280406_view-user-icon-png-user-circle-icon-png.png"
+        },
+        public_id : String,
+    },
     isAdmin: {
         type: Boolean,
         default: false // Default value is false

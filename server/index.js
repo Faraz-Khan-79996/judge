@@ -17,7 +17,7 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const User = require('./models/user.js');
 const { isLoggedIn } = require('./middlewares/userMiddleware.js');
-
+const multer = require('multer')
 // app.use(cors())
 app.use(cors({ credentials: true, origin: 'http://localhost:5173' }));
 app.set("view engine", "ejs")

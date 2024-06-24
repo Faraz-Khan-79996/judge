@@ -5,14 +5,17 @@ const userMiddleware = require('../middlewares/userMiddleware')
 // const userController = require('../controller/user.js')
 const User = require('../models/user')
 const ExpressError = require('../utils/ExpressError')
-
+const {uploadOnCloudinary , deleteFromCloudinary} = require('../cloudinary/cloudinary')
+const {upload} = require('../cloudinary/multer')
+const path = require('path')
+const multer = require('multer')
 
 router.post('/signup', async (req, res) => {
     try {
         console.log("/signup req received");
         let { username, password , email} = req.body
         // console.log(req.body);
-        const new_user = new User({ username , email });
+        const new_user = new User({ username , email , image :{url:"https://www.hotelbooqi.com/wp-content/uploads/2021/12/128-1280406_view-user-icon-png-user-circle-icon-png.png"}});
         const userDoc = await User.register(new_user, password)//will automatically check if username is unique or not.
         //register() method added by passport-local-mongoose
         //will register user in database as well.
@@ -110,9 +113,57 @@ router.put('/user/unsave' , userMiddleware.isLoggedIn , async (req , res)=>{
         res.status(200).json("ok")
 
     } catch (error) {
-        res.status(500).send(error)
+        const e = new ExpressError(500 , error.message , "update image failed")
+        res.status(500).send(e)
     }
 })
 
+
+
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         cb(null, './uploads')
+//     },
+//     filename: function (req, file, cb) {
+//         // const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+//         // cb(null, file.fieldname + '-' + uniqueSuffix)
+
+//         cb(null, file.originalname)
+//     }
+// })
+// const upload = multer({ storage: storage })
+
+router.post('/user/update' , userMiddleware.isLoggedIn , upload.single('file') ,async (req , res)=>{
+try {
+    // console.log("req came!");
+    const {_id , image : img} = req.user;
+    const previousId = img.public_id
+    // console.log(req.user);
+
+    // console.log(req.file)
+
+    const filePath = path.join(__dirname ,'..', `uploads/${req.file.originalname}`)
+    const response = await uploadOnCloudinary(filePath);
+    const image = {
+        public_id : response.public_id,
+        url : response.url,
+    }
+
+    const userDoc = await User.findByIdAndUpdate(_id , {image} , {
+        new : true,
+    })
+
+    res.json(userDoc)
+
+    try {
+        deleteFromCloudinary(previousId)
+    } catch (error) {
+        console.log(error);
+    }
+} catch (error) {
+    console.log(error);
+    res.status(500).json(error)
+}
+})
 module.exports = router
 

@@ -28,7 +28,7 @@ export default function TableRow({
           <div className="d-flex align-items-center">
             <Link className="remove-underline" to={`/user/${user}`}>
               <img
-                src="https://avatars.githubusercontent.com/u/149095180?v=4"
+                src={userId?.image.url}
                 alt=""
                 style={{ width: "45px", height: "45px" }}
                 className="rounded-circle"

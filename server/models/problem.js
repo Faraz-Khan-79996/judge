@@ -19,6 +19,11 @@ const problemSchema = new Schema({
     pythonSolution: String,
     author : String,
 
+    authorId :{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    
     acceptedSubmissions : {
         type : Number,
         default : 0

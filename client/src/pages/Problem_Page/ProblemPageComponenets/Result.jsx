@@ -30,7 +30,8 @@ export default function Result({submissionDoc = null }) {
       errorMessage,
       code,
       FailedInfo,
-      runtime
+      runtime,
+      userId,
     } = submissionDoc;
 
 
@@ -61,7 +62,8 @@ export default function Result({submissionDoc = null }) {
               }`}
             >
               <img
-                src="https://via.placeholder.com/100"
+                // src="https://via.placeholder.com/100"
+                src={userId.image.url}
                 alt="Profile"
                 className="tw-w-24 tw-h-24 tw-rounded-full tw-ml-10 tw-mr-4"
               />
@@ -160,7 +162,7 @@ export default function Result({submissionDoc = null }) {
                 <Alert.Heading>{message}</Alert.Heading>
                 <p>Fix your code bruh....</p>
                 <hr />
-                <p className="tw-mb-0">{errorMessage}</p>
+                <p className="tw-mb-0 tw-whitespace-pre-wrap">{errorMessage}</p>
               </Alert>
             ) : null}
           </div>
