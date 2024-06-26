@@ -52,7 +52,7 @@ function NavbarComponent() {
 
   return (
     <nav
-      className={`tw-flex tw-items-center tw-justify-between tw-flex-wrap tw-bg-white dark:tw-bg-gray-800 lg:tw-py-4 tw-pr-0 lg:tw-px-12
+      className={`tw-flex tw-items-center tw-justify-between tw-flex-wrap tw-py-4 tw-bg-white dark:tw-bg-gray-800 lg:tw-py-4 tw-pr-0 lg:tw-px-12
        lg:tw-shadow tw-border-solid tw-border-t-2 tw-border-blue-700 dark:tw-border-blue-500`}
     >
       <div className="tw-flex tw-justify-between lg:tw-w-auto tw-w-full lg:tw-border-b-0 tw-pl-6 tw-pr-2 tw-border-solid tw-border-b-2 tw-border-gray-300 dark:tw-border-gray-700 tw-pb-5 lg:tw-pb-0">
@@ -105,7 +105,7 @@ function NavbarComponent() {
         <button onClick={toggleDarkMode} className="btn tw-mr-1">
             {darkMode ? <MoonStars size={25} /> : <BrightnessHigh size={25} />}
           </button>
-        <div className="tw-relative tw-mx-auto tw-text-gray-600 dark:tw-text-gray-300 lg:tw-block tw-hidden">
+        <div className="tw-relative tw-mx-auto tw-text-gray-600 dark:tw-text-gray-300 lg:tw-block">
           <SearchBar />
         </div>
 

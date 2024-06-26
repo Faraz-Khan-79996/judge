@@ -202,7 +202,7 @@ export default function SearchBar(params) {
                   borderColor: darkMode ? 'gray' : '',
                 },
               }}
-            size="small" {...params} label="Probems" />}
+            size="small" {...params} label="Problems" />}
       />
     </>
   );
