@@ -19,6 +19,7 @@ const UserContextProvider = ({ children }) => {
 
     useEffect(() => {
         // console.log(loading);
+        document.documentElement.setAttribute('data-bs-theme', 'dark');
         axios.get('/api/profile', {
             withCredentials: true
         })

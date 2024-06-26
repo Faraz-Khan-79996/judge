@@ -83,7 +83,7 @@ export default function ProblemPage() {
     return (
         <div className="pt-1">
             <button onClick={toggleDarkMode} className='btn dark:tw-bg-slate-800 tw-bg-sky-950 tw-text-white tw-fixed tw-bottom-5 tw-right-5'>{darkMode ? <MoonStars size={25} /> : <BrightnessHigh size={25} /> }</button>
-            <Link to="/"><BackButton size={"small"} top={"-5px"} /></Link>
+            <Link to="/"><BackButton variant="problem" size={"small"} top={"-5px"} /></Link>
             <Tabs
                 variant='underline'
                 defaultActiveKey="Description"

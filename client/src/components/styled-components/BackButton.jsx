@@ -1,10 +1,10 @@
 import classes from './Button.module.css';
 
-export default function BackButton({ onClick , size="medium", top="0px" , left}) {
+export default function BackButton({ onClick , size="medium", top="-5px" , left , variant="login"}) {
 
 
   return (
-    <div className={`tw-absolute tw-top-[${top}] tw-z-10`}>
+    <div className={`tw-absolute ${variant=="problem" ? "tw-top-[-5px]" : ""} tw-z-10`}>
       <button onClick={onClick} className={`${classes['button']} ${classes[size]}`}>
         <div className={classes['button-box']}>
           <span className={`${classes['button-elem']}`}>
