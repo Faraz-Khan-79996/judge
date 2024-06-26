@@ -50,7 +50,7 @@ function Problem_card({ _id , name , intro , difficulty , createdAt , author , a
   return (
     <>
 <div className="tw-my-16">
-  <div className="tw-my-4 tw-max-w-8xl tw-rounded-lg tw-px-10 tw-py-6 tw-shadow-md dark:tw-shadow-cyan-500/50 dark:bg-[#212529] dark:tw-text-white">
+  <div className="tw-my-4 tw-max-w-8xl  tw-px-10 tw-py-6 tw-shadow-md dark:tw-shadow-cyan-500/50 dark:bg-[#212529] dark:tw-text-white">
     <div className="tw-flex tw-items-center tw-justify-between">
       <span className="tw-font-light tw-text-gray-600 dark:tw-text-white">{createdAt}</span>
       <Pill text={difficulty} mode={difficulty} />

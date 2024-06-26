@@ -13,6 +13,7 @@ import axios from 'axios'
 import Alert from 'react-bootstrap/Alert';
 import {MoonStars , BrightnessHigh} from'react-bootstrap-icons'
 import UserContext from "../../context/UserContext";
+import BackButton from "../../components/styled-components/BackButton";
 
 export default function ProblemPage() {
     
@@ -82,7 +83,7 @@ export default function ProblemPage() {
     return (
         <div className="pt-1">
             <button onClick={toggleDarkMode} className='btn dark:tw-bg-slate-800 tw-bg-sky-950 tw-text-white tw-fixed tw-bottom-5 tw-right-5'>{darkMode ? <MoonStars size={25} /> : <BrightnessHigh size={25} /> }</button>
-            <Link to="/"><Button style={{ position: 'absolute', top: "5px", left: "5px", zIndex: 1000,width : "60px" }} variant="secondary"><ArrowLeft /></Button></Link>
+            <Link to="/"><BackButton size={"small"} top={"-5px"} /></Link>
             <Tabs
                 variant='underline'
                 defaultActiveKey="Description"

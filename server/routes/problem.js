@@ -238,13 +238,14 @@ router.post('/create' , isLoggedIn, isAdmin ,async(req , res)=>{
         problem.author = req.user.username;
         problem.authorId = req.user._id;
         problem.output = problem.output.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
-        problem.output = output.trim()
+        problem.output = problem.output.trim()
         // console.log(req.body);
 
         const problemDoc = await Problem.create(problem)
 
         res.json(problemDoc)
     } catch (error) {
+        console.log(error);
         res.status(500).json(error)
     }
 })

@@ -30,6 +30,7 @@ main().catch(err => console.log(err));
 
 async function main() {
   await mongoose.connect(process.env.CONNECTION_STRING);
+  // await mongoose.connect("mongodb://localhost:27017/judge");
   console.log("database connected");
 }
 

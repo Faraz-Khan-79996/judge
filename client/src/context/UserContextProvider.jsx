@@ -7,7 +7,7 @@ const UserContextProvider = ({ children }) => {
 
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
-    const [darkMode, setDarkMode] = useState(false);
+    const [darkMode, setDarkMode] = useState(true);
     const [showToast , setShowtoast] = useState(true)
 
     const toggleDarkMode = () => {

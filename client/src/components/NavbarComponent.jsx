@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./component.css";
 
 import UserContext from "../context/UserContext";
@@ -24,6 +24,7 @@ import MenuItem from "@mui/material/MenuItem";
 
 function NavbarComponent() {
   const { user, logout, toggleDarkMode, darkMode } = useContext(UserContext);
+  const navigate = useNavigate()
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -39,6 +40,7 @@ function NavbarComponent() {
     try {
       await logout();
       toast.info("Logged OUT successfully", { autoClose: 2000 });
+      handleClose()
     } catch (error) {
       alert(error.message);
     }
@@ -48,6 +50,11 @@ function NavbarComponent() {
   function toggleNavbar() {
     setToggled((prev) => !prev);
     console.log("clicked");
+  }
+
+  function profileHandler(params) {
+    handleClose()
+    navigate(`/user/${user.username}`)
   }
 
   return (
@@ -130,24 +137,13 @@ function NavbarComponent() {
               <MenuItem onClick={handleClose}>
                 <h4 className="tw-font-semibold ">{user.username}</h4>
               </MenuItem>
-              <MenuItem onClick={handleClose}>
+              <MenuItem onClick={profileHandler}>
                 <div className="tw-w-full tw-text-center">
-                  <Link
-                    className="remove-underline"
-                    to={`/user/${user.username}`}
-                  >
                     Profile
-                  </Link>
                 </div>
               </MenuItem>
-              <MenuItem className="" onClick={handleClose}>
-                <button
-                  className="tw-w-full"
-                  onClick={logoutHandler}
-                  variant="outline-danger"
-                >
-                  Logout
-                </button>
+              <MenuItem className="" onClick={logoutHandler}>
+                  <span className="tw-text-center tw-w-full">Logout</span>      
               </MenuItem>
             </Menu>
           </>
