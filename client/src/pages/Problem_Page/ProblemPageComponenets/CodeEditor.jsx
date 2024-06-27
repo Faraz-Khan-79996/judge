@@ -149,7 +149,7 @@ const CodeEditor = ({ setKey, setResultInfo, _id , input}) => {
       
       const { data } = await axios.post(`/api/submit/${_id}`, { payload });
       // console.log(data);
-      setResultInfo(data);
+      
       const jobId = data.jobDoc._id;
       setStatusHistory((prev) => prev.concat(`queue\n`));
 
@@ -167,6 +167,7 @@ const CodeEditor = ({ setKey, setResultInfo, _id , input}) => {
             // setLoadingSubmit((prev) => false);
             //   console.log(data);
             setResultInfo(data.submissionDoc)
+            console.log(data.submissionDoc);
             // console.log(data);
             break;
           }
@@ -185,9 +186,12 @@ const CodeEditor = ({ setKey, setResultInfo, _id , input}) => {
         console.log("Error", e.message);
       }
     }
-    updateUser();
-    setLoadingSubmit((prev) => false);
-    setKey("Result");
+    finally{
+      await updateUser();
+      setLoadingSubmit((prev) => false);
+      setKey("Result");
+
+    }
   }
 
   return (

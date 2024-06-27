@@ -34,7 +34,7 @@ export default function Result({submissionDoc = null }) {
       userId,
     } = submissionDoc;
 
-
+  
     return (
       <div
         className={`${
@@ -63,7 +63,7 @@ export default function Result({submissionDoc = null }) {
             >
               <img
                 // src="https://via.placeholder.com/100"
-                src={userId.image.url}
+                src={userId?.image?.url}
                 alt="Profile"
                 className="tw-w-24 tw-h-24 tw-rounded-full tw-ml-10 tw-mr-4"
               />

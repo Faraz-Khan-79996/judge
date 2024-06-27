@@ -291,7 +291,7 @@ router.get('/submit/status' , async(req , res)=>{
         const jobDoc = await Job.findById(id);
     
         if(jobDoc.status == "completed"){
-            const submissionDoc = await Submission.findById(jobDoc.submissionId)
+            const submissionDoc = await Submission.findById(jobDoc.submissionId).populate('userId' , 'image')
             res.json({submissionDoc , jobDoc})            
 
             // fs.unlink(jobDoc.filePath);
