@@ -104,10 +104,10 @@ function NavbarComponent() {
           >
             Submissions
           </Link>
-          {/* <Link href="#responsive-header"
+          <Link to={'/leaderboard'}
         className="tw-block tw-mt-4 lg:tw-inline-block lg:tw-mt-0 hover:tw-text-white tw-px-4 tw-py-2 tw-rounded hover:tw-bg-blue-700 dark:hover:tw-bg-blue-500 tw-mr-2">
-        Menu 3
-      </Link> */}
+        Leaderboard
+      </Link>
         </div>
         <button onClick={toggleDarkMode} className="btn tw-mr-1">
             {darkMode ? <MoonStars size={25} /> : <BrightnessHigh size={25} />}

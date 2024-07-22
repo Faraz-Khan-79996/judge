@@ -148,8 +148,8 @@ const ProfilePage = () => {
                     </span>
                   </p>
                   <p className="tw-text-lg tw-font-medium">
-                    Total Views:{" "}
-                    <span className="tw-font-normal">{"NULL"}</span>
+                    Points{" : "}
+                    <span className="tw-font-normal">{userProfileData.points}</span>
                   </p>
                 </div>
               </div>

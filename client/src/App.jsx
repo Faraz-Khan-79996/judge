@@ -21,6 +21,7 @@ import EditProblem from './Admin Panel/admin_pages/EditProblem';
 import ProfilePage from './pages/Profile_page/ProfilePage';
 import SubmissionPage from './pages/SubmissionPage/SubmissionPage';
 import NotFoundPage from './pages/errorPages/NotFoundPage';
+import LeaderBoard from './pages/leadeboard/LeaderBoard';
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
             <Route path='/submissions' element={<StandingPage />} />
             <Route path='/user/:username' element={<ProfilePage />} />
             <Route path='/submission/:id' element={<SubmissionPage />} />
+            <Route path='/leaderboard' element={< LeaderBoard/>} />
             <Route path='/error' element={<NotFoundPage />} />
           </Route>
           {/* <Route path='/problem/:id' element={<ProblemPage />} /> */}

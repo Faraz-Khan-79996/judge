@@ -70,6 +70,14 @@ router.get('/users', async (req, res) => {
 
 router.get('/user/:username', async (req, res) => {
     try {
+
+        const points = {
+            'basic': 10,
+            'easy': 30,
+            'medium': 80,
+            'hard': 150
+        }
+
         const { username } = req.params
         const user = await User.findOne({username : username}, { hash: 0, salt: 0 })
             .populate({
@@ -80,8 +88,16 @@ router.get('/user/:username', async (req, res) => {
             .populate('likedProblems')
             .populate('solved')
             .populate('saved')
+        
+            
+            let count = 0;
+            for (const problem of user.solved) {
+                count += points[problem.difficulty];
+            }
+            let processedUser = user.toObject()
+            processedUser.points = count;
 
-        res.status(200).send(user)
+        res.status(200).send(processedUser)
     } catch (error) {
         res.status(500).send(error)
     }
