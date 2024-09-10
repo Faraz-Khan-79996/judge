@@ -128,7 +128,7 @@ export default function LoginPage() {
                     to="/signup"
                     className="tw-font-medium tw-text-blue-600 hover:tw-underline dark:tw-text-blue-500"
                   >
-                    Login
+                    Signup
                   </Link>
                 </p>
               </form>
