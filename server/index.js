@@ -18,6 +18,21 @@ const LocalStrategy = require('passport-local')
 const User = require('./models/user.js');
 const { isLoggedIn } = require('./middlewares/userMiddleware.js');
 const multer = require('multer')
+const rateLimit = require('express-rate-limit');
+
+
+// Configure the rate limiter
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 10 minutes
+  max: 500, // Limit each IP to 500 requests per `window` (here, per 10 minutes)
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  message: 'Too many requests, please try again later.',
+});
+
+// Apply the rate limiter to all requests
+app.use(limiter);
+
 // app.use(cors())
 app.use(cors({ credentials: true, origin: 'http://localhost:5173' }));
 app.set("view engine", "ejs")
