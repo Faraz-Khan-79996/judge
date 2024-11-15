@@ -70,10 +70,24 @@ CLOUDINARY_API_SECRET=your-cloudinary-api-secret
 
 ## Screenshots and Videos
 - **Demo Video**:  https://youtu.be/aKCjscl01VI?si=MVuf9G-qrsTMNZdG
-![Screenshot from 2024-11-15 18-54-26](https://github.com/user-attachments/assets/71fa4edb-a49d-44ea-8eb6-339d9e754182)
-![Screenshot from 2024-11-15 19-27-16](https://github.com/user-attachments/assets/02ee77ac-294b-45f8-b85c-cda893a9ff8e)
-![Screenshot from 2024-11-15 18-55-26](https://github.com/user-attachments/assets/2103472d-d8a5-4e43-ac88-bac51116b6b7)
-![Screenshot from 2024-11-15 18-54-47](https://github.com/user-attachments/assets/1b9e8a27-2d58-4542-ae2a-ad87f32afcbb)
+  
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/71fa4edb-a49d-44ea-8eb6-339d9e754182" width="45%" alt="Image 1">
+  <img src="https://github.com/user-attachments/assets/1b9e8a27-2d58-4542-ae2a-ad87f32afcbb" width="45%" alt="Image 2">
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/2103472d-d8a5-4e43-ac88-bac51116b6b7" width="45%" alt="Image 3">
+  <img src="https://github.com/user-attachments/assets/02ee77ac-294b-45f8-b85c-cda893a9ff8e" width="45%" alt="Image 4">
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/ad89061e-08dc-48f4-bd18-e7200fb3fa54" width="45%" alt="Image 3">
+  <img src="https://github.com/user-attachments/assets/b3298b16-89e0-48d2-bcf2-02cb30f0c2c3" width="45%" alt="Image 4">
+</p>
+
+
+![Screenshot from 2024-11-15 18-56-48](https://github.com/user-attachments/assets/333b3cc7-0938-4dad-828d-a92ac3f69d8d)
 
 
 ## Future Improvements
